@@ -1,12 +1,13 @@
 import React from 'react'
 import { useState } from 'react';
-import {Link} from 'react-router-dom';
-import axios from"axios";
-
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
+import axios from "axios";
 
 function Login() {
+    const { setIsAuthenticated } = useOutletContext();
     const [error,setError]=useState('');
     const [isTeacher, setIsTeacher]=useState(false);
+    const navigate=useNavigate();
     const handleSubmit=async (e)=>{
         e.preventDefault();
         const formData=new FormData(e.target);
@@ -27,7 +28,8 @@ function Login() {
             console.log(response.data.data)
             const accessToken = response.data.data.accessToken;
             localStorage.setItem("accessToken", accessToken)
-
+            setIsAuthenticated(true);
+            navigate('/');
             setError('');
         }
         catch(err){

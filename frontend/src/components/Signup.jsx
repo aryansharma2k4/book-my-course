@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Signup() {
   const [error, setError] = useState("");
   const [isTeacher, setIsTeacher] = useState(false);
+  const navigate=useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,6 +29,8 @@ function Signup() {
       });
       console.log(response.data);
       setError("");
+      navigate('/login');
+
     } catch (err) {
       setError("Error occurred while connecting to the server");
       console.log(err);
