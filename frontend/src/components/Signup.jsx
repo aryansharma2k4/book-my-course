@@ -17,7 +17,10 @@ function Signup() {
     }
 
     try {
-      const response = await axios.post(isTeacher ? "TEACHER_SIGNUP_URL" : "STUDENT_SIGNUP_URL", JSON.stringify(formObject),
+      const axiosInstance = axios.create({
+        timeout: 50000
+      })
+      const response = await axiosInstance  .post(isTeacher ? "TEACHER_SIGNUP_URL" : "http://127.0.0.1:8000/api/v1/users/registerUser", JSON.stringify(formObject),
       {
         headers: {
           'Content-Type': 'application/json'
@@ -36,8 +39,7 @@ function Signup() {
       <div className="self-center mx-auto bg-white p-10 rounded-lg shadow-lg w-2/3 md:w-1/3">
         <span className="text-2xl">{isTeacher ? "Educator Signup" : "Student Signup"}</span>
         <form className="my-8 flex flex-col gap-y-5" onSubmit={handleSubmit}>
-          <input className="border-black border-1 py-2 px-3" type="text" name="firstname" placeholder="First name" required />
-          <input className="border-black border-1 py-2 px-3" type="text" name="lastname" placeholder="Last name" required />
+          <input className="border-black border-1 py-2 px-3" type="text" name="name" placeholder="First name" required />
           <input className="border-black border-1 py-2 px-3" type="email" name="email" placeholder="E-mail address" required />
           <input className="border-black border-1 py-2 px-3" type="password" name="password" placeholder="Password" required />
           <input className="border-black border-1 py-2 px-3" type="password" name="confirmPassword" placeholder="Re-enter password" required />

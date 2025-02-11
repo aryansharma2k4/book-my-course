@@ -13,15 +13,21 @@ function Login() {
         const formObject=Object.fromEntries(formData.entries());
 
         try{
+            const axiosInstance = axios.create({
+              timeout: 50000
+            })
             const response = await axios({
-                url: isTeacher ? "TEACHER_LOGIN_URL" : "STUDENT_LOGIN_URL",
+                url: isTeacher ? "TEACHER_LOGIN_URL" : "http://127.0.0.1:8000/api/v1/users/loginUser",
                 method: "POST",
                 headers: {
                   'Content-Type': 'application/json'
                 },
                 data: JSON.stringify(formObject)
               });
-            console.log(response.data)
+            console.log(response.data.data)
+            const accessToken = response.data.data.accessToken;
+            localStorage.setItem("accessToken", accessToken)
+
             setError('');
         }
         catch(err){
