@@ -27,6 +27,8 @@ const generateAccessAndRefreshToken = async(userId) =>{
 const registerEducator = asyncHandler( async(req, res) => {
     const { name, email, password } = req.body;
 
+    
+
     if([name, email, password].some((fields) => fields?.trim() === "")) throw new ApiError(400, "Please enter all fields");
 
     const exsistingEducator = await Educator.findOne({
@@ -35,8 +37,10 @@ const registerEducator = asyncHandler( async(req, res) => {
     if(exsistingEducator) throw new ApiError(409, "User with this email ID already exsists");
 
     const avatarLocalPath = req.files?.avatar?.[0]?.path;
+    console.log(avatarLocalPath);
+    
 
-    const avatar = avatarLocalPath ? uploadOnCloudinary(avatarLocalPath) : null;
+    const avatar = avatarLocalPath ? await uploadOnCloudinary(avatarLocalPath) : null;
 
     const educator = await Educator.create({
         name, 
@@ -54,9 +58,30 @@ const registerEducator = asyncHandler( async(req, res) => {
     )
 })
 const loginEducator = asyncHandler( async(req, res) => {
-    
+    const { email, password } = req.body;
+    if(!email || !password) throw new ApiError(409, "These fields are required")
+    const educator = await Educator.findOne({
+        $or: [{email}]    
+    })
+    if(!educator) throw new ApiError(404, "User not found");
+    const isPasswordValid = await educator.isPasswordCorrect(password);
+    if(!isPasswordValid) throw new ApiError(403, "Password is Wrong");
+    const { accessToken, refreshToken } = await generateAccessAndRefreshToken(educator._id);
+    const loggedInEducator = await Educator.findById(educator._id).select("-password -refreshToken")
+
+    const options = {
+        httpOnly: false,
+        secure: true
+    }
+    return res.status(200).cookie("accessToken",accessToken, options).cookie("refreshToken", refreshToken, options).json(new ApiResponse(200, {
+        educator: loggedInEducator,
+        accessToken,
+        refreshToken,
+        
+    },
+"educator logged in successfully"))
 })
 
 
 
-export { registerEducator }
+export { registerEducator, loginEducator }
