@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import companyLogo from '../assets/company-logo.svg';
+import toast from "react-hot-toast";
 
 function Header({isAuthenticated, setIsAuthenticated}) {
   const navigate = useNavigate();
@@ -8,6 +9,7 @@ function Header({isAuthenticated, setIsAuthenticated}) {
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
     setIsAuthenticated(false);
+    toast.success("Logged out successfully");
     navigate('/login');
   };
 

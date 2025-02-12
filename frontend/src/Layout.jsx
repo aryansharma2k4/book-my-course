@@ -3,6 +3,7 @@ import Header from './components/Header'
 import Footer from './components/Footer'
 import { Outlet } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { Toaster } from 'react-hot-toast'
 
 
 
@@ -20,6 +21,7 @@ function Layout() {
   return (
     <div style={{fontFamily:'"DM Sans", serif'}}>
       <Header isAuthenticated={isAuthenticated} setIsAuthenticated={setIsAuthenticated}/>
+      <Toaster position='top-center'/>
       <Outlet context={{ isAuthenticated, setIsAuthenticated }}/>
       <Footer/>
     </div>

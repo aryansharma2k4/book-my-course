@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import axios from "axios";
+import toast from 'react-hot-toast';
 import studentLoginImage from '../assets/student-login-page.jpg';
 import teacherLoginImage from '../assets/teacher-login-page.jpg';
 
@@ -10,6 +11,8 @@ function Login() {
     const [error,setError]=useState('');
     const [isTeacher, setIsTeacher]=useState(false);
     const navigate=useNavigate();
+
+
     const handleSubmit=async (e)=>{
         e.preventDefault();
         const formData=new FormData(e.target);
@@ -31,11 +34,14 @@ function Login() {
             const accessToken = response.data.data.accessToken;
             localStorage.setItem("accessToken", accessToken)
             setIsAuthenticated(true);
+            toast.success("Login successful");
             navigate('/');
+
             setError('');
         }
         catch(err){
             setError("Server error");
+            toast.error("Login failed");
             console.log(err);
         }
     }
