@@ -1,0 +1,18 @@
+/* Apply dark theme to scrollbars */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Dark background for the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555; /* Darker thumb color */
+  border-radius: 10px;
+  border: 3px solid #1e1e1e; /* Match the track background */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888; /* Lighter thumb color on hover */
+}

@@ -7,6 +7,7 @@ import Signup from './components/Signup'
 import Login from './components/Login'
 import Landing from './components/Landing'
 import Video from './components/Video'
+import './index.css';
 
 const router = createBrowserRouter([{
   path: '/',

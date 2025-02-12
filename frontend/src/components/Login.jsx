@@ -2,6 +2,8 @@ import React from 'react'
 import { useState } from 'react';
 import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import axios from "axios";
+import studentLoginImage from '../assets/student-login-page.jpg';
+import teacherLoginImage from '../assets/teacher-login-page.jpg';
 
 function Login() {
     const { setIsAuthenticated } = useOutletContext();
@@ -36,25 +38,25 @@ function Login() {
             setError("Server error");
             console.log(err);
         }
-
-        
     }
 
-    
   return (
-    <div>
-      <div className='min-h-screen flex bg-pink-100'>
-      <div className='self-center mx-auto bg-white p-10 rounded-lg shadow-lg w-2/3 md:w-1/3'>
-      <span className='text-2xl'>{!isTeacher ? (<>Log in </>):(<>Educator login </>)}</span>
-      <form className='my-8 flex flex-col gap-y-5' onSubmit={handleSubmit}>
-                        <input className='border-black border-1 py-2 px-3' type='email' name='email' placeholder='E-mail' required />
-                        <input className='border-black border-1 py-2 px-3' type='password' name='password' placeholder='Password' required />
-                        {error && <span className='text-red-500'>{error}</span>}
-                        <button className='bg-black text-white py-2 rounded-lg' type='submit'>Log in</button>
-                    </form>
-                    <span>Don't have an account? Sign up <Link to='/signup'><u>here</u></Link></span><br/>
-                    <span>{!isTeacher ? (<>Educator login </>):(<>Student Login </>)}{" "} <button onClick={()=>{setIsTeacher(!isTeacher)}}><u>here</u></button></span>
+    <div className='min-h-screen flex bg-white flex-row'>
+      <div className='flex-1 flex flex-col justify-center items-center max-w-128'>
+        <span className='text-2xl font-bold'>{!isTeacher ? (<>Log in </>):(<>Educator login </>)}</span>
+        <form className='my-8 flex flex-col gap-y-5' onSubmit={handleSubmit}>
+          <input className='border-black border-1 p-2 w-72' type='email' name='email' placeholder='E-mail' required />
+          <input className='border-black border-1 p-2 w-72' type='password' name='password' placeholder='Password' required />
+          
+          <button className='bg-black text-white py-2 rounded-lg cursor-pointer mt-2' type='submit'>Log in</button>
+          
+        </form>
+        <span>Don't have an account? Sign up <Link to='/signup'><u>here</u></Link></span>
+        <span className='mt-2'>{!isTeacher ? (<>Educator login </>):(<>Student Login </>)}{" "} <button className='cursor-pointer' onClick={()=>{setIsTeacher(!isTeacher)}}><u>here</u></button></span>
+          {error && <span className='text-red-500'>{error}</span>}
       </div>
+      <div className='flex-1 flex justify-center'>
+        <img src={isTeacher ? teacherLoginImage : studentLoginImage} alt='Login' className='max-w-full h-auto transition' draggable={false} />
       </div>
     </div>
   )
