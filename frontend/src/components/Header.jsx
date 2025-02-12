@@ -13,14 +13,14 @@ function Header({isAuthenticated, setIsAuthenticated}) {
 
   return (
     <div>
-      <div className="h-24 bg-[#040F0F] fixed top-0 left-0 min-w-screen text-xl text-white flex justify-between items-center px-10">
+      <header className="h-24 bg-[#040F0F] fixed top-0 left-0 min-w-screen text-xl text-white flex justify-between items-center px-10 mb-4">
         <Link to="/">
-          <img src={companyLogo} alt="Company Logo"/>
+          <img className='h-10 sm:h-12' src={companyLogo} alt="Company Logo"/>
         </Link>
         <ul className="flex gap-x-5 align-middle">
           {isAuthenticated ? (
             <>
-              <button className="text-red-400" onClick={handleLogout}>Log out</button>
+              <button className="text-red-400 cursor-pointer" onClick={handleLogout}>Log out</button>
             </>
           ) : (
             <>
@@ -33,7 +33,7 @@ function Header({isAuthenticated, setIsAuthenticated}) {
             </>
           )}
         </ul>
-      </div>
+      </header>
     </div>
   );
 }
