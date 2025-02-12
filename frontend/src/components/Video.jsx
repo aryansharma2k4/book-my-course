@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom';
 function Video() {
   const { data } = useParams();
   const [videoData, setVideoData] = useState({
-    title: '',
-    description: '',
+    title: 'Sample',
+    description: 'Description',
     thumbnail: '',
     url: 'http://res.cloudinary.com/deniaaly2/video/upload/v1739382940/wfh1jvhjgdcgz7mfbedn.mp4' // Default URL for development purposes
   });

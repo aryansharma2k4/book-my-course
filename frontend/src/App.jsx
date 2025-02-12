@@ -8,6 +8,8 @@ import Login from './components/Login'
 import Landing from './components/Landing'
 import Video from './components/Video'
 import './index.css';
+import AddToCourse from './components/AddToCourse'
+import CreateNewCourse from './components/CreateNewCourse'
 
 const router = createBrowserRouter([{
   path: '/',
@@ -25,7 +27,14 @@ const router = createBrowserRouter([{
   },{
     path:'video/:videoid',
     element: <Video/>
-  }]
+  },
+{
+  path:'addcourse/:courseid',
+  element: <CreateNewCourse/>
+},{
+  path: 'course/edit/:courseeditid',
+  element: <AddToCourse/>
+}]
 }])
 
 
