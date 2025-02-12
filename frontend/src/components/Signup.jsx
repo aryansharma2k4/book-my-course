@@ -33,12 +33,10 @@ function Signup() {
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Validate file type
       if (!file.type.startsWith('image/')) {
         setError("Please upload an image file");
         return;
       }
-      // Validate file size (5MB limit)
       if (file.size > 5 * 1024 * 1024) {
         setError("File size should be less than 5MB");
         return;
