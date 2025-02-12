@@ -20,7 +20,7 @@ function Login() {
               timeout: 50000
             })
             const response = await axios({
-                url: isTeacher ? "TEACHER_LOGIN_URL" : "http://127.0.0.1:8000/api/v1/users/loginUser",
+                url: isTeacher ? "http://127.0.0.1:8000/api/v1/educator/logInEducator" : "http://127.0.0.1:8000/api/v1/users/loginUser",
                 method: "POST",
                 headers: {
                   'Content-Type': 'application/json'
