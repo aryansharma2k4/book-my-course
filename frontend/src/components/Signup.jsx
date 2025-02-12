@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useOutletContext } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function Signup() {
   const { setIsAuthenticated } = useOutletContext();
@@ -95,9 +96,11 @@ function Signup() {
       const data = await response.json();
       localStorage.setItem("accessToken", data.data.accessToken);
       setIsAuthenticated(true);
+      toast.success("Signup successful");
       navigate("/");
     } catch (err) {
       setError(err.message || "Error occurred while connecting to the server");
+      toast.error("Signup failed");
       console.error(err);
     } finally {
       setIsLoading(false);
