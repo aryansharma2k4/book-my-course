@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useOutletContext } from "react-router-dom";
 import axios from "axios";
+import studentLoginImage from '../assets/student-login-page.jpg';
+import teacherLoginImage from '../assets/teacher-login-page.jpg';
 
 function Signup() {
+  const { setIsAuthenticated } = useOutletContext();
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [isTeacher, setIsTeacher] = useState(false);
 
@@ -27,7 +31,11 @@ function Signup() {
         }
       });
       console.log(response.data);
-      setError("");
+      const accessToken = response.data.data.accessToken;
+            localStorage.setItem("accessToken", accessToken)
+            setIsAuthenticated(true);
+            navigate('/');
+            setError('');
     } catch (err) {
       setError("Error occurred while connecting to the server");
       console.log(err);
@@ -35,25 +43,27 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex bg-pink-100">
-      <div className="self-center mx-auto bg-white p-10 rounded-lg shadow-lg w-2/3 md:w-1/3">
-        <span className="text-2xl">{isTeacher ? "Educator Signup" : "Student Signup"}</span>
+    <div className="min-h-screen flex bg-white flex-row">
+      <div className="flex-1 flex flex-col justify-center items-center max-w-128 align-middle">
+        <span className="text-2xl mt-16 font-bold">{isTeacher ? "Educator Signup" : "Signup"}</span>
         <form className="my-8 flex flex-col gap-y-5" onSubmit={handleSubmit}>
-          <input className="border-black border-1 py-2 px-3" type="text" name="name" placeholder="First name" required />
-          <input className="border-black border-1 py-2 px-3" type="email" name="email" placeholder="E-mail address" required />
-          <input className="border-black border-1 py-2 px-3" type="password" name="password" placeholder="Password" required />
-          <input className="border-black border-1 py-2 px-3" type="password" name="confirmPassword" placeholder="Re-enter password" required />
+          <input className="border-black border-1 p-2 w-72" type="text" name="name" placeholder="Name" required />
+          <input className="border-black border-1 p-2 w-72" type="email" name="email" placeholder="E-mail address" required />
+          <input className="border-black border-1 p-2 w-72" type="password" name="password" placeholder="Password" required />
+          <input className="border-black border-1 p-2 w-72" type="password" name="confirmPassword" placeholder="Re-enter password" required />
           {error && <span className="text-red-500">{error}</span>}
-          <button className="bg-black text-white py-2 rounded-lg" type="submit">Sign Up</button>
+          <button className="bg-black text-white py-2 rounded-lg cursor-pointer" type="submit">Sign Up</button>
         </form>
         <span>
           Already have an account? Log in <Link to="/login"><u>here</u></Link>
         </span>
-        <br />
-        <span className="mt-8">
+        <span className="mt-2">
           {isTeacher ? "Student signup" : "Educator signup"} {" "}
-          <button onClick={() => setIsTeacher(!isTeacher)}><u>here</u></button>
+          <button className='cursor-pointer' onClick={() => setIsTeacher(!isTeacher)}><u>here</u></button>
         </span>
+      </div>
+      <div className="flex-1 flex justify-center">
+        <img src={isTeacher ? teacherLoginImage : studentLoginImage} alt='Signup' className='max-w-full h-auto' draggable={false} />
       </div>
     </div>
   );
