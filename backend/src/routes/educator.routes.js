@@ -9,9 +9,6 @@ router.route("/registerEducator").post(
         {
             name: "avatar",
             maxCount: 1,
-        },{
-            name: "coverImage",
-            maxCount: 1
         }
     ]),
     registerEducator

@@ -53,6 +53,9 @@ const registerEducator = asyncHandler( async(req, res) => {
         new ApiResponse(200, {educator: createdEducator, accessToken }, "Educator Registered Successfully")
     )
 })
+const loginEducator = asyncHandler( async(req, res) => {
+    
+})
 
 
 
