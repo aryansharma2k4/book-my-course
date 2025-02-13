@@ -18,14 +18,21 @@ function CreateNewCourse() {
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/api/v1/course/initializeCourse",
-        data
+        data,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem("accessToken")}`
+          }
+        }
       );
+    
       console.log(response);
       toast.success("Course created successfully");
-      navigate("/course/edit/" + response.data.data.courseId);
-    } catch (e) {
-      console.log(e);
-      toast.error("Error creating course");
+      navigate(`/course/edit/${response.data.message._id}`);
+    } catch (error) {
+      console.error("Error creating course:", error);
+      toast.error("Failed to create course. Please try again.");
     }
   };
 

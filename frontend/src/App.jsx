@@ -11,6 +11,7 @@ import './index.css';
 import AddToCourse from './components/AddToCourse'
 import CreateNewCourse from './components/CreateNewCourse'
 import Dashboard from './components/Dashboard'
+import CourseView from './components/CourseView'
 
 const router = createBrowserRouter([{
   path: '/',
@@ -33,9 +34,14 @@ const router = createBrowserRouter([{
   path:'addcourse/:courseid',
   element: <CreateNewCourse/>
 },{
-  path: 'course/edit/:courseeditid',
+  path: 'course/edit/:courseid',
   element: <AddToCourse/>
-},{
+},
+{
+  path:'course/view/:courseid',
+  element: <CourseView/>
+},
+{
   path:'profile/:profileid',
   element: <Dashboard/>
 }]
