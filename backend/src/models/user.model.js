@@ -22,7 +22,13 @@ const userSchema = new Schema({
     },
     refreshToken: {
         type: String
-    }
+    },
+    courses:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: "course"
+        }
+    ]
 });
 
 // Hash password before saving

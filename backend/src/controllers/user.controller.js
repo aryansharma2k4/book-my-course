@@ -31,7 +31,8 @@ const registerUser = asyncHandler(async(req, res) => {
     const user = await User.create({
         name,
         email, 
-        password
+        password,
+        course: []
     })
     const accessToken = await generateAccessAndRefreshToken(user._id);
     const createdUser = await User.findById(user._id).select("-password -refreshToken");

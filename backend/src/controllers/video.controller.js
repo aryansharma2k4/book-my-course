@@ -4,6 +4,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { Video } from "../models/video.model.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { isValidObjectId } from "mongoose";
 
 
 
@@ -51,9 +52,15 @@ const publishVideo = asyncHandler(async(req, res) => {
 
 })
 
-// const getVideoById = asyncHandler(async(req, res) => {
-//     const { videoId } = req.params;
-//     if()
-// })
+const getVideoById = asyncHandler(async(req, res) => {
+    const { videoId } = req.params;
+    if(!isValidObjectId(videoId)) throw new ApiError(404, "Not able to find the video with the given video ID");
 
-export { publishVideo }
+    const video = await Video.findById(videoId);
+    if(!video) throw new ApiError(404, "Video not found");
+
+    return res.status(200).json(new ApiResponse(200, "Video retrieved successfully", video));
+
+})
+
+export { publishVideo, getVideoById }
