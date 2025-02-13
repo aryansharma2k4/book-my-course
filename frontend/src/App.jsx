@@ -12,6 +12,8 @@ import AddToCourse from './components/AddToCourse'
 import CreateNewCourse from './components/CreateNewCourse'
 import Dashboard from './components/Dashboard'
 import CourseView from './components/CourseView'
+import LiveStream from './components/liveStream'
+
 
 const router = createBrowserRouter([{
   path: '/',
@@ -23,6 +25,9 @@ const router = createBrowserRouter([{
     {
     path: 'signup',
     element: <Signup />,
+  },{
+    path: "livestream",
+    element: <LiveStream />
   }, {
     path: 'login',
     element: <Login />,
