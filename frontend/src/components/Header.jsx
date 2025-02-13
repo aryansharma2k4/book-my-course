@@ -15,7 +15,7 @@ function Header({isAuthenticated, setIsAuthenticated}) {
 
   return (
     <div>
-      <header className="h-24 bg-[#040F0F] fixed top-0 left-0 min-w-screen text-xl text-white flex justify-between items-center px-10 mb-4">
+      <header className="h-24 bg-[#040F0F] fixed top-0 left-0 min-w-screen text-xl text-white flex justify-between items-center px-5 mb-4">
         <Link to="/">
           <img className='h-10 sm:h-12' src={companyLogo} alt="Company Logo"/>
         </Link>

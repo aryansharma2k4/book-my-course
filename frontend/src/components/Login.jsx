@@ -47,7 +47,7 @@ function Login() {
     }
 
   return (
-    <div className='min-h-screen flex bg-white flex-row mt-12'>
+    <div className='min-h-screen flex bg-white flex-row pt-24'>
       <div className='flex-1 flex flex-col justify-center items-center w-full md:w-1/2 p-6'>
         <span className='text-2xl font-bold mb-4'>{!isTeacher ? (<>Log in </>):(<>Educator login </>)}</span>
         <form className='w-full max-w-sm flex flex-col gap-4 my-4' onSubmit={handleSubmit}>

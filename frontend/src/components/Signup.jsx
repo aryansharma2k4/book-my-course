@@ -106,7 +106,7 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen mt-12 flex flex-col md:flex-row bg-white">
+    <div className="min-h-screen pt-24 flex flex-col md:flex-row bg-white">
       <div className="flex flex-1 flex-col items-center justify-center w-full md:w-1/2 p-6">
         <h2 className="text-2xl font-bold mb-6">{isTeacher ? "Educator Signup" : "Signup"}</h2>
         <form className="w-full max-w-sm flex flex-col gap-4" onSubmit={handleSubmit}>
