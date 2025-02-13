@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -22,56 +22,66 @@ function CreateNewCourse() {
       );
       console.log(response);
       toast.success("Course created successfully");
-      navigate("/");
+      navigate("/course/edit/" + response.data.data.courseId);
     } catch (e) {
       console.log(e);
       toast.error("Error creating course");
     }
   };
 
-  return (
-    <div className="min-h-screen pt-24 mx-24 bg-white text-black flex flex-col gap-y-4">
-      <span className="text-5xl font-bold pt-12">Set up your course</span>
-      <hr className="border-0.5 border-grey-300 w-full mt-4" />
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      navigate("/login");
+      toast("Please login or create an account to continue");
+    }
+  }, []);
 
-      <form className="mt-4 flex flex-col flex-1 gap-y-4" onSubmit={handleSubmit}>
-        <label className="font-light flex">
-          Title:
-          <input
-            className="border border-gray-300 rounded-lg text-gray-700 ml-8  mt-1 px-2 py-1 w-1/2"
-            type="text"
-            name="coursetitle"
-            placeholder="Course title"
-            required
-          />
-        </label>
-        <label className="font-light">
-          Description
-          <textarea
-            className="border border-gray-300 rounded-lg text-gray-700 p-2 mt-1 w-full"
-            placeholder="Course Description"
-            rows="5"
-            name="coursedescription"
-            required
-          />
-        </label>
-        <label className= "font-light">
-          Price
-          <input
-            className="border border-gray-300 rounded-lg text-gray-700 p-2 mt-1 w-full"
-            type="number"
-            name="courseprice"
-            placeholder="Price"
-            required
-          />
+  return (
+    <div className="flex-1 flex justify-center items-center p-8 md:p-12 lg:p-16">
+      <div className="w-full max-w-2xl h-full mt-24 p-6 md:p-8 bg-white rounded-lg shadow-lg">
+        <h1 className="text-4xl md:text-5xl font-bold pt-4">Set up your course</h1>
+        <hr className="border border-gray-300 w-full my-4" />
+
+        <form className="mt-4 flex flex-col gap-y-4" onSubmit={handleSubmit}>
+          <label className="w-full">
+            Title:
+            <input
+              className="border border-gray-300 rounded-lg text-gray-700 w-full mt-1 px-3 py-2"
+              type="text"
+              name="coursetitle"
+              placeholder="Course title"
+              required
+            />
           </label>
-        <button
-          type="submit"
-          className="py-1 bg-black text-white rounded transition hover:bg-white hover:text-black px-2 border-1 border-grey-300 cursor-pointer"
-        >
-          Continue
-        </button>
-      </form>
+          <label className="w-full">
+            Description:
+            <textarea
+              className="border border-gray-300 rounded-lg text-gray-700 w-full mt-1 p-3"
+              placeholder="Course Description"
+              rows="5"
+              name="coursedescription"
+              required
+            />
+          </label>
+          <label className="w-full">
+            Price:
+            <input
+              className="border border-gray-300 rounded-lg text-gray-700 w-full mt-1 px-3 py-2"
+              type="number"
+              name="courseprice"
+              placeholder="Price"
+              required
+            />
+          </label>
+          <button
+            type="submit"
+            className="py-2 px-4 bg-black text-white rounded-lg transition hover:scale-105 hover:bg-white hover:text-black border border-gray-300 cursor-pointer w-full md:w-1/3 mx-auto mt-4"
+          >
+            Continue
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

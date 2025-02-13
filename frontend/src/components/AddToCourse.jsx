@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
 function AddToCourse() {
   const [videos, setVideos] = useState([]);
   const [uploading, setUploading] = useState(false);
   const [progress, setProgress] = useState(0);
+  const navigate = useNavigate();
 
   // Hardcoded course details
   const course = {
@@ -34,6 +36,13 @@ function AddToCourse() {
       }
     }, 200);
   };
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      navigate("/login");
+      toast("Please login or create an account to continue");
+    }
+  }, []);
 
   return (
     <div className="min-h-screen pt-24 flex flex-col items-center bg-white py-36 text-black mt-24">
