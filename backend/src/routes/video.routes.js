@@ -5,7 +5,6 @@ import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
 
-router.use(verifyJWT); //to apply this middleware to every routes
 
 router.route("/publishVideo").post(
     upload.fields([
