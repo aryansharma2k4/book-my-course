@@ -9,6 +9,10 @@ const courseSchema = new Schema({
         type: String, 
         required: true,
     },
+    price: {
+        type: Number,
+        required: true
+    },
     owner: {
         type: Schema.Types.ObjectId,
         ref: "User",

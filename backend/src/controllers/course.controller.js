@@ -4,18 +4,21 @@ import { Video } from "../models/video.model.js";
 import { isValidObjectId } from "mongoose";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js"; 
+import { Educator } from "../models/educator.model.js";
 
 const initializeCourse = asyncHandler(async (req, res) => {
-    const { title, description } = req.body;
+    const { title, description, price } = req.body;
 
     if (!title?.trim() || !description?.trim()) {
         throw new ApiError(400, "All fields are required");
     }
+    if(price < 0) throw new ApiError(400, "Price cannot be negative");
 
     const course = await Course.create({
         title: title.trim(),
         description: description.trim(),
         owner: req.user?._id,
+        price,
         videos: []
     });
 
@@ -46,4 +49,19 @@ const addVideoToCourse = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, "Video added to course successfully", await course.populate("videos")));
 });
 
-export { initializeCourse, addVideoToCourse };
+const getCourseById = asyncHandler(async (req, res) => {
+    const { courseId } = req.params;
+
+    if(!isValidObjectId(courseId)) throw new ApiError(400, "Invalid course ID");
+
+    const educatorId = req.user?._id;
+    const educator = Educator.findById(educatorId);;
+    if(!educator) throw new ApiError(400, "Sorry either you cannot access the page please be a educator to access the page");
+
+    const course = await Course.findById(courseId)
+    if(!course) throw new ApiError(404, "Course not found");
+
+    res.status(200).json(new ApiResponse(200, "Course retrieved successfully", course));
+});
+
+export { initializeCourse, addVideoToCourse, getCourseById };
