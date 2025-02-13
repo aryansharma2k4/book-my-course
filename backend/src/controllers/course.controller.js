@@ -54,10 +54,6 @@ const getCourseById = asyncHandler(async (req, res) => {
 
     if(!isValidObjectId(courseId)) throw new ApiError(400, "Invalid course ID");
 
-    const educatorId = req.user?._id;
-    const educator = Educator.findById(educatorId);;
-    if(!educator) throw new ApiError(400, "Sorry either you cannot access the page please be a educator to access the page");
-
     const course = await Course.findById(courseId)
     if(!course) throw new ApiError(404, "Course not found");
 
