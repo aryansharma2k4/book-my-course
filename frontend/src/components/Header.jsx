@@ -1,33 +1,57 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import companyLogo from '../assets/company-logo.svg';
-import companyLogoSmall from '../assets/company-logo-small.svg';
+import companyLogo from "../assets/company-logo.svg";
+import companyLogoSmall from "../assets/company-logo-small.svg";
 import toast from "react-hot-toast";
 import axios from "axios";
 
 function Header({ isAuthenticated, setIsAuthenticated }) {
   const navigate = useNavigate();
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = localStorage.getItem("accessToken");
   const dropdownRef = useRef(null);
 
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
+    localStorage.removeItem("accessToken");
     setIsAuthenticated(false);
     toast.success("Logged out successfully");
-    navigate('/login');
+    navigate("/login");
   };
 
   useEffect(() => {
     const fetchUserDetails = async () => {
+      if (!accessToken) return;
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/v1/educator/getDetails/", {
-          headers: { Authorization: `Bearer ${accessToken}` },
-        });
-        setUserName(response.data.message.name);
+        // Attempt to fetch details from the educator endpoint
+        const educatorResponse = await axios.get(
+          "http://127.0.0.1:8000/api/v1/educator/getDetails/",
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+        if (educatorResponse.data?.message?.name) {
+          setUserName(educatorResponse.data.message.name);
+          return;
+        }
       } catch (error) {
-        console.error("Error fetching user details:", error);
+        console.warn("Educator endpoint failed, trying user endpoint...", error);
+      }
+
+      // If the educator call fails, try the user endpoint
+      try {
+        const userResponse = await axios.get(
+          "http://127.0.0.1:8000/api/v1/users/getDetails/",
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+        console.log(userResponse);
+        if (userResponse.data.message.name) {
+          setUserName(userResponse.data.message.name);
+        }
+      } catch (error) {
+        console.error("Error fetching user details from both endpoints:", error);
       }
     };
 
@@ -36,7 +60,7 @@ function Header({ isAuthenticated, setIsAuthenticated }) {
     }
   }, [accessToken, isAuthenticated]);
 
-  // Close dropdown if clicking outside of it
+  // Close dropdown when clicking outside of it
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -64,12 +88,12 @@ function Header({ isAuthenticated, setIsAuthenticated }) {
                 onClick={() => setDropdownOpen((prev) => !prev)}
                 className="cursor-pointer bg-gray-700 py-1 px-2 focus:outline-none mr-2 rounded"
               >
-                {userName}
+                {userName || "User"}
               </button>
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-40 bg-black text-white rounded shadow-lg z-50">
                   <button
-                    onClick={() => navigate('/profile')}
+                    onClick={() => navigate("/profile")}
                     className="block w-full text-left px-4 py-2 hover:bg-gray-700"
                   >
                     Profile
