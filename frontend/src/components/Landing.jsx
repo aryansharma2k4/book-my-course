@@ -31,7 +31,7 @@ function Landing() {
 
         <div className="flex flex-row md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <button
-          onClick={() => navigate("/courses")}
+          onClick={() => navigate("/showcourses")}
           className="mt-4 bg-cyan-400 hover:bg-cyan-500 text-black text-lg font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer" 
         >
           Browse course
