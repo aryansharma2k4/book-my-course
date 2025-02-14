@@ -51,12 +51,14 @@ function BrowseLivestreams() {
               <div><h2 className="text-2xl font-semibold mb-2">{livestream.title}</h2>
               <p className="text-gray-300 mb-4">{livestream.description}</p></div>
               
+              <div className="flex flex-col gap-2 justify-center">
               <button
-                className="border-cyan-300 border-2 text-white py-2 px-4 rounded-lg hover:bg-cyan-300 hover:text-black transition cursor-pointer"
+                className="border-green-400 hover:bg-green-600 border-2 text-white py-2 px-4 rounded-lg transition cursor-pointer"
                 onClick={() => navigate(`/viewStream/${livestream._id}`)}
               >
-                Watch
+                Watch stream
               </button>
+              </div>
             </li>
               // <li
               //   key={livestream._id}

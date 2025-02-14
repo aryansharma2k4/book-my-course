@@ -25,7 +25,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    to="/About"
+                    to="/"
                     onClick={() => {
                       scrollTo(0, 0);
                     }}

@@ -86,7 +86,7 @@ function Header({ isAuthenticated, setIsAuthenticated }) {
             <li className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen((prev) => !prev)}
-                className="cursor-pointer bg-gray-700 py-1 px-2 focus:outline-none mr-2 rounded"
+                className="cursor-pointer border-green-300 border-2 py-1 px-2 focus:outline-none mr-2 rounded-xl"
               >
                 {userName || "User"}
               </button>

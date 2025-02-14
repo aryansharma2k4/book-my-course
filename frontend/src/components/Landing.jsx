@@ -10,11 +10,11 @@ function Landing() {
     <div className="min-h-screen p-24 flex flex-col md:flex-row items-center mt-12 bg-[#09090b] text-white px-6 md:px-12">
       {/* Left Content */}
       <div className="flex-1 flex flex-col justify-center items-start text-center md:text-left space-y-4">
-        <h1 className="text-4xl md:text-5xl font-bold leading-tight">
+        <h1 className="text-5xl md:text-5xl font-bold leading-tight">
           Cognitio is your one stop solution for{"  "}
           <RotatingText
             texts={["Courses", "Webinars", "Events", "Lectures"]}
-            mainClassName="px-2 mt-1 bg-black border-2 border-cyan-300 text-white rounded-lg inline-block"
+            mainClassName="px-2 mt-1 bg-black border-2 border-green-300 text-white rounded-lg inline-block"
             staggerFrom={"last"}
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
@@ -32,15 +32,15 @@ function Landing() {
         <div className="flex flex-row md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <button
           onClick={() => navigate("/showcourses")}
-          className="mt-4 bg-cyan-300 hover:bg-cyan-400 text-black text-lg font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer" 
+          className="mt-4 border-green-300 border-2 hover:bg-green-600 text-white text-lg font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer" 
         >
-          Browse courses
+          Browse courses {">"}
         </button>
         <button
           onClick={() => navigate("/showlivestreams")}
-          className="mt-4 bg-cyan-300 hover:bg-cyan-400 text-black text-lg font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer" 
+          className="mt-4 border-green-300 border-2 hover:bg-green-600 text-white text-lg font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer" 
         >
-          Browse Livestreams
+          Browse Livestreams {">"}
         </button>
       </div></div>
 
