@@ -31,9 +31,10 @@ function BrowseLivestreams() {
   }, [livestreams]);
 
   return (
-    <div className="flex-1 flex justify-center items-center p-8 md:p-12 lg:p-16 min-h-screen bg-black">
+    <div className="flex-1 flex justify-center p-8 md:p-12 lg:p-16 min-h-screen bg-black">
       <div className="w-full max-w-4xl mt-24 p-6 md:p-8 bg-[#09090b] text-white rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-6 text-center">Browse Livestreams</h1>
+        <h1 className="text-3xl font-bold">Browse Livestreams</h1>
+        <hr className='w-full my-8'/>
         {loading ? (
           <p className="text-center">Loading livestreams...</p>
         ) : error ? (
@@ -44,18 +45,32 @@ function BrowseLivestreams() {
           <ul className="space-y-6">
             {livestreams.map((livestream) => (
               <li
-                key={livestream._id}
-                className="p-6 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow duration-200"
+              key={livestream._id}
+              className="p-6 border flex justify-between border-gray-400 rounded-lg hover:shadow-lg transition-shadow duration-200"
+            >
+              <div><h2 className="text-2xl font-semibold mb-2">{livestream.title}</h2>
+              <p className="text-gray-300 mb-4">{livestream.description}</p></div>
+              
+              <button
+                className="border-cyan-300 border-2 text-white py-2 px-4 rounded-lg hover:bg-cyan-300 hover:text-black transition cursor-pointer"
+                onClick={() => navigate(`/viewStream/${livestream._id}`)}
               >
-                <h2 className="text-2xl font-semibold mb-2">{livestream.title}</h2>
-                <p className="text-gray-600 mb-4">{livestream.description}</p>
-                <button
-                  className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
-                  onClick={() => navigate(`/viewStream/${livestream._id}`)}
-                >
-                  Watch
-                </button>
-              </li>
+                Watch
+              </button>
+            </li>
+              // <li
+              //   key={livestream._id}
+              //   className="p-6 border border-gray-200 rounded-lg hover:shadow-lg transition-shadow duration-200"
+              // >
+              //   <h2 className="text-2xl font-semibold mb-2">{livestream.title}</h2>
+              //   <p className="text-gray-600 mb-4">{livestream.description}</p>
+              //   <button
+              //     className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
+              //     onClick={() => navigate(`/viewStream/${livestream._id}`)}
+              //   >
+              //     Watch
+              //   </button>
+              // </li>
             ))}
           </ul>
         )}

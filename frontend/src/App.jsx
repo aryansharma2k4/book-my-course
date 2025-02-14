@@ -54,7 +54,7 @@ const router = createBrowserRouter([{
   element: <CourseView/>
 },
 {
-  path:'profile/:profileid',
+  path:'profile/',
   element: <Dashboard/>
 },{
   path:'schedulelivestream/',

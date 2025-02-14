@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 function Dashboard() {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
+  const [userLiveStreams, setUserLiveStreams] = useState([]);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -17,10 +18,17 @@ function Dashboard() {
     
     const fetchUserData = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/v1/user/profile", {
+        // const response = await axios.get("http://127.0.0.1:8000/api/v1/educator/getDetails/",{headers: { Authorization: `Bearer ${accessToken}` }}
+        const response = await axios.get("http://127.0.0.1:8000/api/v1/educator/getDetails/", {
           headers: { Authorization: `Bearer ${accessToken}` },
         });
-        setUser(response.data.data);
+        const lsresponse = await axios.get("http://127.0.0.1:8000/api/v1/educator/getls", {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+        console.log(response);
+        setUser(response.data.message);
+        console.log(lsresponse.data.message);
+        setUserLiveStreams(lsresponse.data.message);
       } catch (error) {
         console.error("Error fetching user data:", error);
         toast.error("Failed to load profile");
@@ -38,12 +46,27 @@ function Dashboard() {
         {user ? (
           <div className="flex flex-col items-center gap-y-4">
             <img
-              src={user.profilePhoto || "https://via.placeholder.com/150"}
+              src={user.avatar || "https://via.placeholder.com/150"}
               alt="Profile"
               className="w-24 h-24 rounded-full border border-gray-300"
             />
             <h2 className="text-2xl font-semibold">{user.name}</h2>
             <p className="text-gray-600">{user.email}</p>
+            <p className="text-gray-600 self-start">Your live streams</p>
+            <hr className="w-full border border-gray-300" />
+            <ul className="space-y-4">
+              {userLiveStreams.map((ls) => (
+                <li key={ls._id} className="flex items-center justify-between w-full">
+                  <p className="text-gray-600">{ls.title}</p>
+                  <button
+                    onClick={() => navigate(`/ext/${ls}`)}
+                    className="px-4 py-2 bg-cyan-300 text-black rounded hover:bg-cyan-400 transition-colors duration-300"
+                  >
+                    Watch
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         ) : (
           <p className="text-gray-500">Loading profile...</p>
