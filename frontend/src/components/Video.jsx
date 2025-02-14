@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from "react";
 import ReactPlayer from "react-player";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
 function Video() {
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const courseId = queryParams.get('courseId');
+  
   const { videoid } = useParams();
   const navigate = useNavigate();
   const [videoData, setVideoData] = useState(null);
   const [courseVideos, setCourseVideos] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const courseId = "67af7241f13f33be6da4d5a3";
 
   const axiosInstance = axios.create({
     timeout: 5000,

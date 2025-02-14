@@ -58,7 +58,7 @@ function CourseView() {
           <ul className="list-disc pl-5">
             {videos.map((video) => (
               <li key={video.id} className="text-gray-800">
-                <Link className="text-blue-600 cursor-pointer" to={`/video/${video.id}`}>
+                <Link className="text-blue-600 cursor-pointer" to={`/video/${video.id}?courseId=${courseid}`}>
                   {video.title}
                 </Link>
               </li>
