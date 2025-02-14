@@ -17,13 +17,21 @@ const initializeCourse = asyncHandler(async (req, res) => {
     }
     if(price < 0) throw new ApiError(400, "Price cannot be negative");
 
+    const educator = await Educator.findById(req.user?._id);
+    if (!educator) throw new ApiError(404, "Educator not found");
+
+
     const course = await Course.create({
         title: title.trim(),
         description: description.trim(),
         owner: req.user?._id,
         price,
-        videos: []
-    });
+        videos: [],
+    })
+
+    await educator.courses.push(course._id);
+    await educator.save();
+
 
     res.status(201).json(new ApiResponse(201, "Course initialized successfully", course));
 });

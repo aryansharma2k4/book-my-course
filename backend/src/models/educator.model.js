@@ -26,10 +26,10 @@ const educatorSchema = new Schema({
         required: false,
 
     },
-    courses: {
+    courses: [{
         type: Schema.Types.ObjectId,
         ref: "course"
-    },
+    }],
     livestreams:[{
         type: Schema.Types.ObjectId,
         ref: "livestream"
