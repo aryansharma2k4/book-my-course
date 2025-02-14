@@ -4,11 +4,11 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.use(verifyJWT)
 
-router.route("/schedule").post(scheduleLivestream);
-router.route("/stream/:streamId").get(streamDetailsById);
-router.route("/live/:streamId").get(startStream);
+
+router.use(verifyJWT).route("/schedule").post(scheduleLivestream);
+router.use(verifyJWT).route("/stream/:streamId").get(streamDetailsById);
+router.use(verifyJWT).route("/live/:streamId").get(startStream);
 router.route("/all").get(getAllLiveStreams);
 
 export default router;
