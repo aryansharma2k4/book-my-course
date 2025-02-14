@@ -1,74 +1,111 @@
-import React, { useState, useEffect } from 'react';
-import ReactPlayer from 'react-player';
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import ReactPlayer from "react-player";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Video() {
   const { videoid } = useParams();
-  const [ videoData, setVideoData] = useState(null)
+  const navigate = useNavigate();
+  const [videoData, setVideoData] = useState(null);
+  const [courseVideos, setCourseVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  console.log(videoid);
-  
+  const courseId = "67af7241f13f33be6da4d5a3";
 
-  
   const axiosInstance = axios.create({
-    timeout: 5000
-  })
+    timeout: 5000,
+  });
 
   useEffect(() => {
     const fetchVideo = async () => {
       try {
-        const response = await axiosInstance.get(`http://127.0.0.1:8000/api/v1/video/${videoid}`);
-        console.log(response);
-        setVideoData(response.data);
+        setLoading(true);
+        const response = await axiosInstance.get(
+          `http://127.0.0.1:8000/api/v1/video/${videoid}`
+        );
+        setVideoData(response.data.message);
       } catch (error) {
         console.error("Error fetching video:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     if (videoid) fetchVideo();
+  }, [videoid]);
+
+  useEffect(() => {
+    const fetchCourseVideos = async () => {
+      try {
+        const response = await axiosInstance.get(
+          `http://127.0.0.1:8000/api/v1/course/${courseId}`
+        );
+
+        const videoIds = response.data.message.videos;
+
+        // Fetch each video's details in parallel
+        const videoDetailsPromises = videoIds.map(async (id) => {
+          try {
+            const res = await axiosInstance.get(
+              `http://127.0.0.1:8000/api/v1/video/${id}`
+            );
+            return res.data.message;
+          } catch (error) {
+            console.error(`Error fetching details for video ${id}:`, error);
+            return null;
+          }
+        });
+
+        // Wait for all API calls to complete
+        const videoDetails = await Promise.all(videoDetailsPromises);
+
+        // Filter out failed requests (null values)
+        setCourseVideos(videoDetails.filter((video) => video !== null));
+      } catch (err) {
+        console.error("Error fetching course videos:", err);
+      }
+    };
+
+    fetchCourseVideos();
   }, []);
 
-  console.log(videoData && videoData.message.videoFile);
-
-  const title = videoData && videoData.message.title;
-  const description = videoData && videoData.message.description;
-
-  const url = videoData && videoData.message.videoFile;
-  
-  
-
-  if (!videoData) {
+  if (loading) {
     return (
-      <div className='min-h-screen flex flex-col items-center bg-white py-36 text-black'>
-      <p className='text-center mt-20 text-lg'>Loading video...</p>
-    </div>
-  );
+      <div className="min-h-screen flex flex-col items-center bg-white py-36 text-black">
+        <p className="text-center mt-20 text-lg">Loading video...</p>
+      </div>
+    );
   }
 
   return (
-    <div className='min-h-screen flex flex-col items-center bg-gradient-to-br from-gray-900 to-gray-700 py-36 text-white px-4 sm:px-8'>
-  <div className='w-full max-w-full aspect-video'>
-    <ReactPlayer
-      className='w-full h-full'
-      width="100%"
-      height="100%"
-      autoplay
-      loop={false}
-      controls
-      playing
-      url={url}
-    />
-  </div>
-  <div className='flex flex-col mt-2 gap-y-4 w-full max-w-[90%] sm:max-w-[80%] lg:max-w-[60%]'>
-    <div className='flex flex-col gap-y-2'>
-      <h1 className='text-2xl font-bold'>{title}</h1>
-      <p className='text-lg mb-4'>{description}</p>
+    <div className="my-36 flex gap-8 px-8">
+      {/* Video Player Section */}
+      <div className="w-[75%]">
+        <ReactPlayer width="100%" height="600px" url={videoData.videoFile} playing controls />
+        <h1 className="text-black text-3xl font-bold mt-4">{videoData.title}</h1>
+        <p className="text-black text-lg mt-2">{videoData.description}</p>
+      </div>
+
+      <div className="w-[25%] text-black bg-gray-100 p-4 rounded-lg shadow-md">
+        <h2 className="text-xl font-semibold mb-4">Playlist</h2>
+        <ul className="space-y-3">
+          {courseVideos.map((video) => (
+            <li
+              key={video._id}
+              className={`flex items-center gap-4 p-2 rounded-lg cursor-pointer ${
+                video._id === videoid ? "bg-gray-300 font-bold" : "hover:bg-gray-200"
+              }`}
+              onClick={() => navigate(`/video/${video._id}`)}
+            >
+              <div>
+                <h3 className="text-sm font-semibold">{video.title}</h3>
+                <p className="text-xs text-gray-600 line-clamp-2">{video.description}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
-  </div>
-</div>
-
-
   );
 }
 

@@ -7,14 +7,14 @@ function Landing() {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen p-24 flex flex-col md:flex-row items-center mt-12 bg-white px-6 md:px-12">
+    <div className="min-h-screen p-24 flex flex-col md:flex-row items-center mt-12 bg-[#09090b] text-white px-6 md:px-12">
       {/* Left Content */}
       <div className="flex-1 flex flex-col justify-center items-start text-center md:text-left space-y-4">
         <h1 className="text-4xl md:text-5xl font-bold leading-tight">
           Cognitio is your one stop solution for{"  "}
           <RotatingText
             texts={["Courses", "Webinars", "Events", "Lectures"]}
-            mainClassName="px-2 bg-cyan-300 text-black rounded-lg inline-block"
+            mainClassName="px-2 mt-1 bg-black border-2 border-cyan-300 text-white rounded-lg inline-block"
             staggerFrom={"last"}
             initial={{ y: "100%" }}
             animate={{ y: 0 }}
@@ -25,20 +25,20 @@ function Landing() {
             rotationInterval={2000}
           />
         </h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-gray-300">
           Join us today and start learning!
         </p>
 
         <div className="flex flex-row md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <button
           onClick={() => navigate("/showcourses")}
-          className="mt-4 bg-cyan-400 hover:bg-cyan-500 text-black text-lg font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer" 
+          className="mt-4 bg-cyan-300 hover:bg-cyan-400 text-black text-lg font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer" 
         >
-          Browse course
+          Browse courses
         </button>
         <button
           onClick={() => navigate("/showlivestreams")}
-          className="mt-4 bg-cyan-400 hover:bg-cyan-500 text-black text-lg font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer" 
+          className="mt-4 bg-cyan-300 hover:bg-cyan-400 text-black text-lg font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer" 
         >
           Browse Livestreams
         </button>
@@ -52,6 +52,9 @@ function Landing() {
           className="max-w-full md:max-w-lg h-auto rounded-lg shadow-lg"
           draggable={false}
         />
+      </div>
+      <div>
+        
       </div>
     </div>
   );
