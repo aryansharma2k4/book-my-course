@@ -18,6 +18,8 @@ import LiveStreamDetails from './components/LiveStreamDetails'
 import StreamView from './components/StreamView'
 import StreamAuxillary from './components/StreamAuxillary'
 import LiveStreamView from './components/liveStreamView'
+import BrowseLivestreams from './components/BrowseLivestreams'
+import BrowseCourse from './components/BrowseCourse'
 
 
 const router = createBrowserRouter([{
@@ -41,7 +43,7 @@ const router = createBrowserRouter([{
     element: <Video/>
   },
 {
-  path:'addcourse/:courseid',
+  path:'addcourse',
   element: <CreateNewCourse/>
 },{
   path: 'course/edit/:courseid',
@@ -66,6 +68,12 @@ const router = createBrowserRouter([{
 },{
   path: 'viewStream/:streamId',
   element: <LiveStreamView />
+},{
+  path:'showlivestreams',
+  element: <BrowseLivestreams/>
+},{
+  path:'showcourses',
+  element:<BrowseCourse/>
 }]
 }])
 

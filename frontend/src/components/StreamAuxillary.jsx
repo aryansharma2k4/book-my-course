@@ -16,8 +16,9 @@ function StreamAuxillary() {
     const fetchLiveStreamDetails = async () => {
       try {
         console.log("Fetching details for streamid:", streamid);
+        console.log(streamid);
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/v1/livestream/stream/${streamid}`,
+          `http://127.0.0.1:8000/api/v1/users/getStreamKey/${streamid}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('accessToken')}`,

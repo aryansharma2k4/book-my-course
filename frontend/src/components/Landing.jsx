@@ -29,14 +29,20 @@ function Landing() {
           Join us today and start learning!
         </p>
 
-        {/* Browse Courses Button */}
+        <div className="flex flex-row md:flex-row space-y-4 md:space-y-0 md:space-x-4">
         <button
           onClick={() => navigate("/courses")}
           className="mt-4 bg-cyan-400 hover:bg-cyan-500 text-black text-lg font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer" 
         >
-          Browse Courses
+          Browse course
         </button>
-      </div>
+        <button
+          onClick={() => navigate("/showlivestreams")}
+          className="mt-4 bg-cyan-400 hover:bg-cyan-500 text-black text-lg font-semibold px-4 py-2 rounded-lg transition duration-300 shadow-md hover:shadow-lg cursor-pointer" 
+        >
+          Browse Livestreams
+        </button>
+      </div></div>
 
       {/* Right Image */}
       <div className="flex-1 flex justify-center items-center mt-8 md:mt-0">
