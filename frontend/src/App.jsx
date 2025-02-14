@@ -61,7 +61,7 @@ const router = createBrowserRouter([{
   path:'viewLiveStream/:streamid',
   element: <StreamView/>
 },{
-  path:'ext/:streamId',
+  path:'ext/:streamid',
   element: <StreamAuxillary/>
 },{
   path: 'viewStream/:streamId',

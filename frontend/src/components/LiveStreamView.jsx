@@ -43,9 +43,13 @@ function LiveStreamView() {
   }, [source]);
 
   return (
-    <div className="mt-24">
-      <button onClick={getPlaybackId}>Start Stream</button>
-      <video ref={videoRef} autoPlay controls width="600"></video>
+    <div className="mt-24 flex flex-1 flex-col justify-center">
+        <div className='pt-8 flex flex-col gap-y-4 bg-gradient-to-br from-gray-900 to-gray-700 p-6 md:p-8 shadow-lg'>
+
+      <video className='self-center w-full h-full' ref={videoRef} autoPlay controls width="600"></video>
+      <button className='bg-cyan-300 px-2 py-1 rounded-lg w-1/5 cursor-pointer' onClick={getPlaybackId}>Click here to join the Stream!</button>
+        </div>
+      
     </div>
   );
 }
