@@ -2,9 +2,12 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { Course } from "../models/course.model.js";
 import { Video } from "../models/video.model.js"; 
 import { isValidObjectId } from "mongoose";
-import { ApiError } from "../utils/ApiError.js";
+import { ApiError } from "../utils/apiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js"; 
 import { Educator } from "../models/educator.model.js";
+import { Livestream } from "../models/livestream.model.js";
+
+
 
 const initializeCourse = asyncHandler(async (req, res) => {
     const { title, description, price } = req.body;

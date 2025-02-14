@@ -4,6 +4,15 @@ import { Livestream } from '../models/livestream.model.js';
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { isValidObjectId } from 'mongoose';
 
+
+const getAllLiveStreams = asyncHandler(async(req , res) => {
+    const livestreams  = await Livestream.find().lean();
+    return res.status(200).json(new ApiResponse(200, "Livestreams fetched", livestreams))
+});
+
+
+
+
 const scheduleLivestream = asyncHandler(async(req, res) => {
     const { title, description, price } = req.body;
 
@@ -17,7 +26,7 @@ const scheduleLivestream = asyncHandler(async(req, res) => {
         title,
         description,
         price,
-        date: Date.now(),
+        // date: new Date(schedule),
         owner: req.user?._id,
         enrolledStudents: []
     })
@@ -66,6 +75,8 @@ const startStream = asyncHandler(async(req, res) => {
       try {
           const response = await fetch("https://livepeer.studio/api/stream", options);
           const data = await response.json();
+          const streamKey = data.streamKey;
+          livestream.streamKey = streamKey;
           const playbackId = data.playbackId;
           livestream.playbackId = playbackId;
           await livestream.save()
@@ -87,4 +98,4 @@ const startStream = asyncHandler(async(req, res) => {
 
 
 
-export { scheduleLivestream, streamDetailsById, startStream }
+export { scheduleLivestream, streamDetailsById, startStream, getAllLiveStreams }

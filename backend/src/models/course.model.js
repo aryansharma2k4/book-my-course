@@ -20,7 +20,11 @@ const courseSchema = new Schema({
     videos: [{
         type: Schema.Types.ObjectId,
         ref: "Video"
-    }]  
+    }],
+    enrolledUsers: [{
+        type: Schema.Types.ObjectId,
+        ref: "user"
+    }]
 })
 
 export const Course = mongoose.model("Course", courseSchema)

@@ -3,6 +3,8 @@ import { ApiError } from "../utils/apiError.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { Livestream } from "../models/livestream.model.js"
+import { Course } from "../models/course.model.js"
+import { isValidObjectId } from "mongoose"
 
 const generateAccessAndRefreshToken = async(userId) =>{
     try{
@@ -20,6 +22,67 @@ const generateAccessAndRefreshToken = async(userId) =>{
         throw new ApiError(500, "Something went wrong generating access and refresh token")
     }
 }
+
+
+const registerCourse = asyncHandler(async (req, res) => {
+    const { courseId, userId } = req.params;
+
+    if (!isValidObjectId(courseId)) 
+        throw new ApiError(409, "Invalid course ID provided");
+
+    
+    if (!isValidObjectId(userId)) 
+        throw new ApiError(409, "Invalid user ID provided");
+
+    const course = await Course.findById(courseId); 
+
+    if (!course) 
+        throw new ApiError(404, "Unable to find the course you mentioned");
+
+    if (course.enrolledUsers.includes(userId)) 
+        throw new ApiError(400, "User is already enrolled in this course");
+
+    course.enrolledUsers.push(userId);
+    await course.save(); 
+
+    return res.status(200).json(new ApiResponse(200, "Course registered successfully", course.enrolledUsers));
+});
+
+const registerLivestream = asyncHandler(async (req, res) => {
+    const { livestreamId } = req.params;
+
+    if (!isValidObjectId(livestreamId)) 
+        throw new ApiError(409, "Invalid livestream ID provided");
+
+    const userId = req.user?._id;
+
+    if (!isValidObjectId(userId)) 
+        throw new ApiError(409, "Invalid user ID provided");
+
+    const livestream = await Livestream.findById(livestreamId);
+
+    if (!livestream) 
+        throw new ApiError(404, "Unable to find the livestream you mentioned");
+
+    // ✅ Ensure the user is not already enrolled to prevent duplicates
+    if (livestream.enrolledStudents.includes(userId)) 
+        throw new ApiError(400, "User is already registered for this livestream");
+
+    livestream.enrolledStudents.push(userId); // ✅ Add the user
+    await livestream.save(); // ✅ Save changes
+
+    return res.status(200).json(new ApiResponse(200, "Livestream registered successfully", livestream.enrolledStudents));
+});
+
+const ifRegisteredCourse = asyncHandler(async(req, res) => {
+    const { courseId } = req.params;
+    const course = await Course.findById(courseId);
+    const enrolledStudents = course.enrolledUsers.find().lean();
+    console.log(enrolledStudents);
+    
+})
+
+
 const registerUser = asyncHandler(async(req, res) => {
     const { name, email, password } = req.body;
     if([name, email, password].some((field) => field?.trim() === "")){
@@ -84,4 +147,13 @@ const getPlaybackId = asyncHandler(async(req, res) => {
     return res.status(200).json(new ApiResponse(200, "Playback id fetched successfully", playbackId))
 })
 
-export { registerUser, loginUser, getPlaybackId }
+const getStreamKey = asyncHandler(async(req, res) => {
+    const { streamId } = req.params;
+    const livestream = await Livestream.findById(streamId);
+    if(!livestream) throw new ApiError(404, "Livestream not found");
+    const streamKey = livestream.streamKey;
+    if(!streamKey) throw new ApiError(404, "Stream key not found");
+    return res.status(200).json(new ApiResponse(200, "Stream key fetched successfully", streamKey))
+})
+
+export { registerUser, loginUser, getPlaybackId, registerLivestream, registerCourse, ifRegisteredCourse, getStreamKey }
