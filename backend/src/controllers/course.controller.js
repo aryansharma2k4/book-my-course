@@ -52,6 +52,11 @@ const addVideoToCourse = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, "Video added to course successfully", await course.populate("videos")));
 });
 
+const getAllCourses = asyncHandler(async(req, res) => {
+    const courses = await Course.find().lean();
+    return res.status(200).json(new ApiResponse(200, "All courses fetched", courses))
+})
+
 const getCourseById = asyncHandler(async (req, res) => {
     const { courseId } = req.params;
 
