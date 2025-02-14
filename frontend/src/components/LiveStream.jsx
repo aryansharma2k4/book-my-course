@@ -1,41 +1,57 @@
-// import { useState, useEffect } from "react";
-// import { getSrc } from "@livepeer/react/external"; // Correct external import
-// import { createClient } from "livepeer"; // Correct import for client creation
-// import axios from "axios";
-import React from "react";
-
-// Initialize Livepeer client
-// const livepeer = createClient({
-//   apiKey: import.meta.env.VITE_LIVEPEER_API_KEY, // Use Vite's env variable
-// });
+import React, { useEffect, useRef, useState } from "react";
+import Hls from "hls.js";
+import { Livepeer } from "livepeer";
+import { getSrc } from "@livepeer/react/external";
+import axios from "axios";
 
 const LiveStream = () => {
-//   const [videoSrc, setVideoSrc] = useState("");
+  const videoRef = useRef(null);
+  const [source, setSource] = useState(null);
 
-//   const playbackId = "98afzh7k2drbe557"; // Replace with dynamic ID if needed
+  useEffect(() => {
+    const livepeer = new Livepeer({
+      apiKey: "da0f5caf-b484-45b5-8960-c0e4ad016938",
+    });
 
-//   useEffect(() => {
-//     const fetchPlaybackSource = async () => {
-//       try {
-//         const playbackData = await livepeer.playback.get(playbackId);
+    const fetchPlayback = async () => {
+      try {
+        const playbackId = await axios.post("http://localhost:8000/api/v1/livestream/getStream");
+        const playbackInfo = await livepeer.playback.get(playbackId);
+        const srcArray = getSrc(playbackInfo.playbackInfo);
 
-//         if (playbackData) {
-//           const src = getSrc(playbackData.playbackInfo);
-//           setVideoSrc(src);
-//           console.log("Video Source:", src);
-//         }
-//       } catch (error) {
-//         console.error("Error fetching playback info:", error);
-//       }
-//     };
+        if (srcArray && srcArray.length > 0) {
+          console.log((srcArray[0].src));
+          
+          setSource(srcArray[0].src);
+        }
+      } catch (error) {
+        console.error("Error fetching playback info:", error);
+      }
+    };
 
-//     fetchPlaybackSource();
-//   }, [playbackId]);
+    fetchPlayback();
+  }, []);
+
+  useEffect(() => {
+    if (source && videoRef.current) {
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(source);
+        hls.attachMedia(videoRef.current);
+      } else if (videoRef.current.canPlayType("application/vnd.apple.mpegurl")) {
+        videoRef.current.src = source;
+      }
+    }
+  }, [source]);
 
   return (
-    <>
-      <video width="640" height="480" controls autoPlay src= "https://livepeercdn.studio/hls/4af6xfj20fqi8ds7/index.m3u8"></video>
-    </>
+    <div>
+      {source ? (
+        <video ref={videoRef} className="w-80%" controls></video>
+      ) : (
+        <p>Loading stream...</p>
+      )}
+    </div>
   );
 };
 
