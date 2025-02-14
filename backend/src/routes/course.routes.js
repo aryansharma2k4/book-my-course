@@ -6,8 +6,8 @@ const router = Router();
 
 router.use(verifyJWT)
 
-router.route("/initializeCourse").post(initializeCourse)
-router.route("/addVideoToCourse").post(addVideoToCourse)
+router.use(verifyJWT).route("/initializeCourse").post(initializeCourse)
+router.use(verifyJWT).route("/addVideoToCourse").post(addVideoToCourse)
 router.route("/:courseId").get(getCourseById)
 
 export default router

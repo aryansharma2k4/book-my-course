@@ -1,5 +1,5 @@
 
-import { ApiError } from "../utils/ApiError.js";
+import { ApiError } from "../utils/apiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { Educator } from "../models/educator.model.js"
@@ -82,6 +82,15 @@ const loginEducator = asyncHandler( async(req, res) => {
 "educator logged in successfully"))
 })
 
+const getStreamKey = asyncHandler(async(req, res) => {
+    const { streamId } = req.params;
+    const livestream = await Livestream.findById(streamId);
+    if(!livestream) throw new ApiError(404, "Livestream not found");
+    const streamKey = livestream.streamKey;
+    if(!streamKey) throw new ApiError(404, "Stream key not found");
+    return res.status(200).json(new ApiResponse(200, "Stream key fetched successfully", streamKey))
+})
 
 
-export { registerEducator, loginEducator }
+
+export { registerEducator, loginEducator, getStreamKey }

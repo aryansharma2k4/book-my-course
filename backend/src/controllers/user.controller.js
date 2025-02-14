@@ -25,7 +25,9 @@ const generateAccessAndRefreshToken = async(userId) =>{
 
 
 const registerCourse = asyncHandler(async (req, res) => {
-    const { courseId, userId } = req.params;
+    const { courseId } = req.params;
+
+    const userId = req.user?._id;
 
     if (!isValidObjectId(courseId)) 
         throw new ApiError(409, "Invalid course ID provided");
@@ -38,12 +40,19 @@ const registerCourse = asyncHandler(async (req, res) => {
 
     if (!course) 
         throw new ApiError(404, "Unable to find the course you mentioned");
+    const user = await User.findById(userId);
+    console.log(user.courses)
+
 
     if (course.enrolledUsers.includes(userId)) 
         throw new ApiError(400, "User is already enrolled in this course");
 
     course.enrolledUsers.push(userId);
     await course.save(); 
+
+    
+    user.courses.push(courseId);
+    await user.save();
 
     return res.status(200).json(new ApiResponse(200, "Course registered successfully", course.enrolledUsers));
 });
@@ -147,13 +156,6 @@ const getPlaybackId = asyncHandler(async(req, res) => {
     return res.status(200).json(new ApiResponse(200, "Playback id fetched successfully", playbackId))
 })
 
-const getStreamKey = asyncHandler(async(req, res) => {
-    const { streamId } = req.params;
-    const livestream = await Livestream.findById(streamId);
-    if(!livestream) throw new ApiError(404, "Livestream not found");
-    const streamKey = livestream.streamKey;
-    if(!streamKey) throw new ApiError(404, "Stream key not found");
-    return res.status(200).json(new ApiResponse(200, "Stream key fetched successfully", streamKey))
-})
 
-export { registerUser, loginUser, getPlaybackId, registerLivestream, registerCourse, ifRegisteredCourse, getStreamKey }
+
+export { registerUser, loginUser, getPlaybackId, registerLivestream, registerCourse, ifRegisteredCourse }
