@@ -11,7 +11,7 @@ function Landing() {
       {/* Left Content */}
       <div className="flex-1 flex flex-col justify-center items-start text-center md:text-left space-y-4">
         <h1 className="text-4xl md:text-5xl font-bold leading-tight">
-          BookMyCourse is your one stop solution for{"  "}
+          Cognitio is your one stop solution for{"  "}
           <RotatingText
             texts={["Courses", "Webinars", "Events", "Lectures"]}
             mainClassName="px-2 bg-cyan-300 text-black rounded-lg inline-block"

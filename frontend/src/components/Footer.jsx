@@ -85,7 +85,7 @@ export default function Footer() {
               href="https://github.com/adith2005-20"
               className="hover:underline"
             >
-                BookMyCourse
+                cognitio
             </a>
             . All Rights Reserved.
           </span>
