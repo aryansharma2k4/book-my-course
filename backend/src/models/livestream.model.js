@@ -25,10 +25,10 @@ const livestreamSchema = new Schema(
         ref: "User",
       },
     ],
-    // date: {
-    //   type: Date,
-    //   required: true,
-    // },
+    date: {
+      type: Date,
+      required: true,
+    },
     playbackId: {
         type: String, 
         unique: false,

@@ -15,36 +15,44 @@ const getAllLiveStreams = asyncHandler(async(req , res) => {
 
 
 const scheduleLivestream = asyncHandler(async(req, res) => {
-    const { title, description, price } = req.body;
+  const { title, description, price, date } = req.body;
 
-    if([title, description].some((field) => field.trim === "")) throw new ApiError(409, "Enter all details");
-    if(price < 0) throw new ApiError(400, "Price cannot be negative");
+  // Validate input
+  if ([title, description].some((field) => field.trim() === "")) {
+      throw new ApiError(409, "Enter all details");
+  }
+  if (price < 0) {
+      throw new ApiError(400, "Price cannot be negative");
+  }
+  if (!date || isNaN(new Date(date).getTime())) {
+      throw new ApiError(400, "Invalid date format");
+  }
 
+  // Log the received body
+  console.log("Received request body:", req.body);
 
-    
+  // Create livestream
+  const livestream = await Livestream.create({
+      title,
+      description,
+      price,
+      date: new Date(date),
+      owner: req.user?._id,
+      enrolledStudents: []
+  });
 
-    const livestream = await Livestream.create({
-        title,
-        description,
-        price,
-        // date: new Date(schedule),
-        owner: req.user?._id,
-        enrolledStudents: []
-    })
-    const educatorId = req.user?._id;
-    const educator = await Educator.findById(educatorId)
-    educator.livestreams.push(livestream._id);
-    educator.save();
-    
+  if (!livestream) throw new ApiError(409, "Unable to create a live stream");
 
-    if(!livestream) throw new ApiError(409, "unable to create a live stream")
+  // Add to educator's livestreams
+  const educator = await Educator.findById(req.user?._id);
+  if (educator) {
+      educator.livestreams.push(livestream._id);
+      await educator.save();
+  }
 
-    return res.status(200).json(new ApiResponse(200, "Livestream scheduled successfully", livestream));
-
-
-
-
+  return res.status(200).json(new ApiResponse(200, "Livestream scheduled successfully", livestream));
 });
+
 
 const streamDetailsById = asyncHandler(async(req, res) => {
     const { streamId } = req.params;
