@@ -25,13 +25,14 @@ import userRouter from "./routes/user.routes.js"
 import educatorRouter from "./routes/educator.routes.js"
 import videoRouter from "./routes/video.routes.js"
 import courseRouter from "./routes/course.routes.js"
-import liveStreamRouter from "./routes/livestream.js"
+import livestreamRouter from "./routes/livestream.routes.js"
 
 
 app.use("/api/v1/users",userRouter)
 app.use("/api/v1/educator", educatorRouter)
 app.use("/api/v1/video", videoRouter)
 app.use("/api/v1/course", courseRouter)
-app.use("/api/v1/livestream", liveStreamRouter)
+app.use("/api/v1/livestream", livestreamRouter)
+
 
 export { app }
