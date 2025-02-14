@@ -68,4 +68,4 @@ const getCourseById = asyncHandler(async (req, res) => {
     res.status(200).json(new ApiResponse(200, "Course retrieved successfully", course));
 });
 
-export { initializeCourse, addVideoToCourse, getCourseById };
+export { initializeCourse, addVideoToCourse, getCourseById, getAllCourses, };
