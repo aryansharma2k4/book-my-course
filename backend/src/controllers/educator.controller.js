@@ -25,6 +25,16 @@ const generateAccessAndRefreshToken = async(userId) =>{
     }
 }
 
+const getEducatorDetails = asyncHandler( async(req, res) => {
+    const educatorId = req.user._id;
+    if(!isValidObjectId(educatorId)) throw new ApiError(404, "Unable to find the educator");
+
+    const educator = await Educator.findById(educatorId)
+    if(!educator) throw new ApiError(404, "unable to find the educator");
+    return res.status(200).json(new ApiResponse(200, "educator fetched successfully", educator))
+
+})
+
 const getEducatorLivestreams = asyncHandler( async(req, res) => {
     const educatorId = req.user._id;
     if(!isValidObjectId(educatorId)) throw new ApiError(404, "Unable to find the educator");
@@ -106,4 +116,4 @@ const getStreamKey = asyncHandler(async(req, res) => {
 
 
 
-export { registerEducator, loginEducator, getStreamKey, getEducatorLivestreams }
+export { registerEducator, loginEducator, getStreamKey, getEducatorLivestreams, getEducatorDetails }

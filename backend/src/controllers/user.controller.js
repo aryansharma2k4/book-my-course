@@ -156,6 +156,14 @@ const getPlaybackId = asyncHandler(async(req, res) => {
     return res.status(200).json(new ApiResponse(200, "Playback id fetched successfully", playbackId))
 })
 
+const getUserDetails = asyncHandler(async(req, res) => {
+    const userId = req.user._id;
+    if(!isValidObjectId(userId)) throw new ApiError(409, "Invalid user ID provided");
+    const user = await User.findById(userId);
+    if(!user) throw new ApiError(404, "User not found");
+    return res.status(200).json(new ApiResponse(200, "User details fetched successfully", user))
+})
 
 
-export { registerUser, loginUser, getPlaybackId, registerLivestream, registerCourse, ifRegisteredCourse }
+
+export { registerUser, loginUser, getPlaybackId, registerLivestream, registerCourse, ifRegisteredCourse, getUserDetails }
