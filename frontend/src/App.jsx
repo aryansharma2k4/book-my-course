@@ -15,6 +15,9 @@ import CourseView from './components/CourseView'
 import LiveStream from './components/liveStream'
 import ScheduleLiveStream from './components/ScheduleLiveStream'
 import LiveStreamDetails from './components/LiveStreamDetails'
+import StreamView from './components/StreamView'
+import StreamAuxillary from './components/StreamAuxillary'
+import LiveStreamView from './components/liveStreamView'
 
 
 const router = createBrowserRouter([{
@@ -56,7 +59,13 @@ const router = createBrowserRouter([{
   element: <ScheduleLiveStream/>
 },{
   path:'viewLiveStream/:streamid',
-  element: <LiveStreamDetails/>
+  element: <StreamView/>
+},{
+  path:'ext/:streamId',
+  element: <StreamAuxillary/>
+},{
+  path: 'viewStream/:streamId',
+  element: <LiveStreamView />
 }]
 }])
 

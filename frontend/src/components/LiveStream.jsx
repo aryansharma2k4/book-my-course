@@ -16,7 +16,7 @@ const LiveStream = () => {
 
     const fetchPlayback = async () => {
       try {
-        const playbackId = await axios.post("http://localhost:8000/api/v1/livestream/getStream");
+        const playbackId = await axios.post(`http://127.0.0.1:8000/api/v1/users/getLive/`);
         const playbackInfo = await livepeer.playback.get(playbackId);
         const srcArray = getSrc(playbackInfo.playbackInfo);
 
