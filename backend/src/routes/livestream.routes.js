@@ -6,8 +6,8 @@ const router = Router();
 
 
 router.route("/all").get(getAllLiveStreams);
+router.route("/stream/:streamId").get(streamDetailsById);
 router.use(verifyJWT).route("/schedule").post(scheduleLivestream);
-router.use(verifyJWT).route("/stream/:streamId").get(streamDetailsById);
 router.use(verifyJWT).route("/live/:streamId").get(startStream);
 
 export default router;
