@@ -9,8 +9,9 @@ const LiveStream = () => {
   const [source, setSource] = useState(null);
 
   useEffect(() => {
+    const LIVEPEERAPI=import.meta.env.VITE_LIVEPEER_API_KEY;
     const livepeer = new Livepeer({
-      apiKey: "da0f5caf-b484-45b5-8960-c0e4ad016938",
+      apiKey: `${LIVEPEERAPI}`,
     });
 
     const fetchPlayback = async () => {
