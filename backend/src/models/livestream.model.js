@@ -31,7 +31,6 @@ const livestreamSchema = new Schema(
     },
     playbackId: {
       type: String,
-      unique: true,
     },
     status: {
       type: String,
