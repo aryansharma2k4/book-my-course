@@ -13,6 +13,8 @@ import CreateNewCourse from './components/CreateNewCourse'
 import Dashboard from './components/Dashboard'
 import CourseView from './components/CourseView'
 import LiveStream from './components/liveStream'
+import ScheduleLiveStream from './components/ScheduleLiveStream'
+import LiveStreamDetails from './components/LiveStreamDetails'
 
 
 const router = createBrowserRouter([{
@@ -49,6 +51,12 @@ const router = createBrowserRouter([{
 {
   path:'profile/:profileid',
   element: <Dashboard/>
+},{
+  path:'schedulelivestream/',
+  element: <ScheduleLiveStream/>
+},{
+  path:'viewLiveStream/:streamid',
+  element: <LiveStreamDetails/>
 }]
 }])
 
