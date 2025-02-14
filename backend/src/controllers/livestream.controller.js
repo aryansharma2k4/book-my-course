@@ -66,7 +66,9 @@ const startStream = asyncHandler(async(req, res) => {
       try {
           const response = await fetch("https://livepeer.studio/api/stream", options);
           const data = await response.json();
-          res.json(data);
+          return res.status(200).json(new ApiResponse(200, "Livestream started successfully", data));
+          
+          
         } 
       catch (error) {
           res.status(500).json({ error: error.message });
