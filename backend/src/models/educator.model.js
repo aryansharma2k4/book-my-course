@@ -29,7 +29,11 @@ const educatorSchema = new Schema({
     courses: {
         type: Schema.Types.ObjectId,
         ref: "course"
-    }
+    },
+    livestreams:[{
+        type: Schema.Types.ObjectId,
+        ref: "livestream"
+    }]
 
 })
 

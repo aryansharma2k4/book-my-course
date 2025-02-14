@@ -4,6 +4,7 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { Educator } from "../models/educator.model.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { isValidObjectId } from "mongoose";
 
 
 
@@ -23,6 +24,18 @@ const generateAccessAndRefreshToken = async(userId) =>{
         throw new ApiError(500, "Something went wrong generating access and refresh token")
     }
 }
+
+const getEducatorLivestreams = asyncHandler( async(req, res) => {
+    const educatorId = req.user._id;
+    if(!isValidObjectId(educatorId)) throw new ApiError(404, "Unable to find the educator");
+
+    const educator = await Educator.findById(educatorId)
+    if(!educator) throw new ApiError(404, "unable to find the educator");
+
+    const livestreams = educator.livestreams;
+    
+    return res.status(200).json(new ApiResponse(200, "livestreams fetched successfully", livestreams))
+})
 
 const registerEducator = asyncHandler( async(req, res) => {
     const { name, email, password } = req.body;
@@ -93,4 +106,4 @@ const getStreamKey = asyncHandler(async(req, res) => {
 
 
 
-export { registerEducator, loginEducator, getStreamKey }
+export { registerEducator, loginEducator, getStreamKey, getEducatorLivestreams }

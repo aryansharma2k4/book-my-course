@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { registerEducator, loginEducator, getStreamKey } from "../controllers/educator.controller.js";
+import { registerEducator, loginEducator, getStreamKey, getEducatorLivestreams } from "../controllers/educator.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -16,5 +16,6 @@ router.route("/registerEducator").post(
 )
 router.route("/logInEducator").post(loginEducator)
 router.use(verifyJWT).route('/getStreamKey/:streamId').get(getStreamKey)
+router.use(verifyJWT).route('/getLS').get(getEducatorLivestreams)
 
 export default router

@@ -3,6 +3,7 @@ import { ApiError} from '../utils/apiError.js';
 import { Livestream } from '../models/livestream.model.js';
 import { ApiResponse } from "../utils/ApiResponse.js"
 import { isValidObjectId } from 'mongoose';
+import { Educator } from '../models/educator.model.js';
 
 
 const getAllLiveStreams = asyncHandler(async(req , res) => {
@@ -30,6 +31,11 @@ const scheduleLivestream = asyncHandler(async(req, res) => {
         owner: req.user?._id,
         enrolledStudents: []
     })
+    const educatorId = req.user?._id;
+    const educator = await Educator.findById(educatorId)
+    educator.livestreams.push(livestream._id);
+    educator.save();
+    
 
     if(!livestream) throw new ApiError(409, "unable to create a live stream")
 
