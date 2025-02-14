@@ -1,7 +1,8 @@
 import { User } from "../models/user.model.js"
-import { ApiError } from "../utils/ApiError.js"
+import { ApiError } from "../utils/apiError.js"
 import { asyncHandler } from "../utils/asyncHandler.js"
 import { ApiResponse } from "../utils/ApiResponse.js"
+import { Livestream } from "../models/livestream.model.js"
 
 const generateAccessAndRefreshToken = async(userId) =>{
     try{
@@ -72,4 +73,15 @@ const loginUser = asyncHandler(async(req, res) => {
     ))
 })
 
-export { registerUser, loginUser }
+const getPlaybackId = asyncHandler(async(req, res) => {
+    const { streamId } = req.params;
+    console.log(streamId);
+    
+    const livestream = await Livestream.findById(streamId);
+    if(!livestream) throw new ApiError(404, "Livestream not found");
+    const playbackId = livestream.playbackId;
+    if(!playbackId) throw new ApiError(404, "Playback id not found");
+    return res.status(200).json(new ApiResponse(200, "Playback id fetched successfully", playbackId))
+})
+
+export { registerUser, loginUser, getPlaybackId }
