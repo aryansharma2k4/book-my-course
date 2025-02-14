@@ -5,6 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js"
 import { Educator } from "../models/educator.model.js"
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { isValidObjectId } from "mongoose";
+import { Livestream } from "../models/livestream.model.js";
 
 
 

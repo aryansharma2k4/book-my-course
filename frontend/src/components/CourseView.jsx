@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom'; // ✅ Import Link
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
@@ -9,6 +9,7 @@ function CourseView() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const accessToken = localStorage.getItem('accessToken');
@@ -18,16 +19,17 @@ function CourseView() {
       return;
     }
 
-    axios
-      .get(`http://127.0.0.1:8000/api/v1/course/${courseid}/`, {
-        headers: { Authorization: `Bearer ${accessToken}` },
-      })
-      .then((response) => {
-        setTitle(response.data.message.title);
-        setDescription(response.data.message.description);
-        return response.data.message.videos || [];
-      })
-      .then(async (videoIds) => {
+    const fetchCourseData = async () => {
+      try {
+        const courseRes = await axios.get(`http://127.0.0.1:8000/api/v1/course/${courseid}/`, {
+          headers: { Authorization: `Bearer ${accessToken}` },
+        });
+
+        setTitle(courseRes.data.message.title);
+        setDescription(courseRes.data.message.description);
+
+        const videoIds = courseRes.data.message.videos || [];
+
         const videoDetails = await Promise.all(
           videoIds.map(async (videoId) => {
             try {
@@ -40,32 +42,47 @@ function CourseView() {
             }
           })
         );
+
         setVideos(videoDetails);
-      })
-      .catch(() => {
+      } catch (error) {
         toast.error('Failed to fetch course details');
-      });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourseData();
   }, [courseid, navigate]);
 
   return (
-    <div className="mt-24 flex-1 flex justify-center p-8 md:p-12 lg:p-16 min-h-screen">
-      <div className="flex flex-1 flex-col gap-y-4 bg-white p-6 md:p-8 rounded-lg shadow-lg">
-        <h1 className="text-4xl font-bold">{title}</h1>
-        <hr className="border border-gray-300 w-full mx-auto my-4" />
-        <p className="text-gray-600">{description}</p>
-        <h2 className="text-2xl font-semibold mt-4">Videos</h2>
-        {videos.length > 0 ? (
-          <ul className="list-disc pl-5">
-            {videos.map((video) => (
-              <li key={video.id} className="text-gray-800">
-                <Link className="text-blue-600 cursor-pointer" to={`/video/${video.id}?courseId=${courseid}`}>
-                  {video.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
+    <div className="mt-24 flex justify-center p-6 md:p-10 min-h-screen bg-gray-100">
+      <div className="w-full max-w-3xl bg-white p-6 md:p-8 rounded-lg shadow-md">
+        {loading ? (
+          <p className="text-center text-lg text-gray-600">Loading course...</p>
         ) : (
-          <p className="text-gray-500">No videos available</p>
+          <>
+            <h1 className="text-4xl font-bold text-gray-900">{title}</h1>
+            <hr className="border border-gray-300 w-full mx-auto my-4" />
+            <p className="text-gray-700 text-xl font-semibold">{description}</p>
+
+            <h2 className="text-2xl font-semibold mt-6">Videos</h2>
+
+            {videos.length > 0 ? (
+              <div className="mt-4">
+                {videos.map((video, index) => (
+                  <Link
+                    key={video.id}
+                    to={`/video/${video.id}?courseId=${courseid}`}
+                    className="block py-3 px-4 border-b font-semibold last:border-none text-lg font-medium bg-gray-200 rounded-xl text-gray-800 hover:bg-gray-300 transition duration-200"
+                  >
+                    {index + 1}. {video.title}
+                  </Link>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 mt-4">No videos available</p>
+            )}
+          </>
         )}
       </div>
     </div>

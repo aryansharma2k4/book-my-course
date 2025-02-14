@@ -7,6 +7,7 @@ function StreamAuxillary() {
   const { streamid } = useParams();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
+  const [ streamKey, setStreamKey ] = useState('');
   // Optionally, if your API returns a dedicated stream URL, you can store it
   const [streamURL, setStreamURL] = useState('');
 
@@ -15,22 +16,16 @@ function StreamAuxillary() {
   useEffect(() => {
     const fetchLiveStreamDetails = async () => {
       try {
-        console.log("Fetching details for streamid:", streamid);
-        console.log(streamid);
         const response = await axios.get(
-          `http://127.0.0.1:8000/api/v1/users/getStreamKey/${streamid}`,
+          `http://127.0.0.1:8000/api/v1/educator/getStreamKey/${streamid}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
             },
           }
         );
-        console.log("Response:", response);
-        // Adjust these property names based on your API response
-        const { title, description, streamURL } = response.data.message;
-        setTitle(title);
-        setDescription(description);
-        setStreamURL(streamURL || ''); // If provided by the API
+        console.log("Response:", response.data.message);
+        setStreamKey(response.data.message);
       } catch (error) {
         console.error('Error fetching livestream details:', error);
       }
@@ -60,9 +55,8 @@ function StreamAuxillary() {
               For <strong>Service</strong>, select <strong>Livepeer Studio</strong>.
             </li>
             <li>
-              In the <strong>Stream Key</strong> field, enter the below Stream Key:
-              <br />
-              <code>{streamkey}</code>
+              In the <strong>Stream Key</strong> field, enter the Stream Key:
+              <code className='text-black ml-1'>{streamKey}</code>
             </li>
             <li>
               Click <strong>Apply</strong> and then <strong>OK</strong> to save the settings.
