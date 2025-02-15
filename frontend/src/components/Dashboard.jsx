@@ -53,7 +53,7 @@ const LiveStreamList = ({ streams, navigate }) => (
             <h3 className="text-lg font-semibold">{stream.title}</h3>
             <p className="text-gray-600">{stream.description}</p>
             <button
-              onClick={() => navigate(`/viewLiveStream/${stream._id}`)}
+              onClick={() => navigate(`/viewLiveStream  /${stream._id}`)}
               className="mt-2 px-4 py-2 bg-cyan-300 text-black rounded hover:bg-cyan-400 transition-colors duration-300"
             >
               Go Live Now

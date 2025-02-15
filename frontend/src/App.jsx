@@ -20,6 +20,7 @@ import StreamAuxillary from './components/StreamAuxillary'
 import LiveStreamView from './components/liveStreamView'
 import BrowseLivestreams from './components/BrowseLivestreams'
 import BrowseCourse from './components/BrowseCourse'
+import UserDashboard from './components/UserDashboard'
 
 
 const router = createBrowserRouter([{
@@ -74,6 +75,9 @@ const router = createBrowserRouter([{
 },{
   path:'showcourses',
   element:<BrowseCourse/>
+},{
+  path: 'myProfile',
+  element: <UserDashboard/>
 }]
 }])
 
