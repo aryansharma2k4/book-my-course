@@ -47,18 +47,18 @@ function Login() {
     }
 
   return (
-    <div className='min-h-screen flex bg-white flex-row pt-24'>
-      <div className='flex-1 flex flex-col justify-center items-center w-full md:w-1/2 p-6'>
+    <div className='min-h-screen flex bg-black flex-row pt-24 text-white'>
+      <div className='flex-1 flex flex-col justify-center items-center w-full md:w-1/2 p-6 bg-[#09090b] shadow-lg'>
         <span className='text-2xl font-bold mb-4'>{!isTeacher ? (<>Log in </>):(<>Educator login </>)}</span>
         <form className='w-full max-w-sm flex flex-col gap-4 my-4' onSubmit={handleSubmit}>
-          <input className='border border-gray-300 rounded-lg text-gray-700 p-2 w-full' type='email' name='email' placeholder='E-mail' required />
-          <input className='border border-gray-300 rounded-lg text-gray-700 p-2 w-full' type='password' name='password' placeholder='Password' required />
+          <input className='border border-gray-200 rounded-lg text-gray-300 p-2 w-full' type='email' name='email' placeholder='E-mail' required />
+          <input className='border border-gray-200 rounded-lg text-gray-300 p-2 w-full' type='password' name='password' placeholder='Password' required />
           
-          <button className='bg-black text-white py-2 rounded-lg cursor-pointer mt-2' type='submit'>Log in</button>
+          <button className='bg-green-400 hover:bg-green-500 text-black py-2 rounded-lg cursor-pointer mt-2' type='submit'>Log in</button>
           
         </form>
-        <span className='text-sm'>Don't have an account? Sign up <Link className='text-blue-600 hover:underline' to='/signup'>here</Link></span>
-        <span className='text-sm mt-2'>{!isTeacher ? (<>Educator login </>):(<>Student Login </>)}{" "} <button className='cursor-pointer text-blue-600 hover:underline' onClick={()=>{setIsTeacher(!isTeacher)}}>here</button></span>
+        <span className='text-sm'>Don't have an account? Sign up <Link className='text-green-600 hover:underline' to='/signup'>here</Link></span>
+        <span className='text-sm mt-2'>{!isTeacher ? (<>Educator login </>):(<>Student Login </>)}{" "} <button className='cursor-pointer text-green-600 hover:underline' onClick={()=>{setIsTeacher(!isTeacher)}}>here</button></span>
           {error && <span className='text-red-500'>{error}</span>}
       </div>
     </div>

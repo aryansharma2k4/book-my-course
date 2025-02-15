@@ -26,12 +26,12 @@ const CourseList = ({ courses, navigate }) => (
     ) : (
       <ul className="space-y-4">
         {courses.map((course) => (
-          <li key={course.id} className="p-4 bg-gray-100 rounded shadow">
+          <li key={course.id} className="p-4 bg-gray-900 rounded shadow">
             <h3 className="text-lg font-semibold">{course.title}</h3>
             <p className="text-gray-600">{course.description}</p>
             <button
               onClick={() => navigate(`/course/view/${course._id}`)}
-              className="mt-2 px-4 py-2 bg-cyan-300 text-black rounded hover:bg-cyan-400 transition-colors duration-300"
+              className="mt-2 px-4 py-2 bg-green-400 text-black rounded hover:bg-green-500 transition-colors duration-300"
             >
               View Course
             </button>
@@ -49,12 +49,12 @@ const LiveStreamList = ({ streams, navigate }) => (
     ) : (
       <ul className="space-y-4">
         {streams.map((stream) => (
-          <li key={stream.id} className="p-4 bg-gray-100 rounded shadow">
+          <li key={stream.id} className="p-4 bg-gray-900 rounded shadow">
             <h3 className="text-lg font-semibold">{stream.title}</h3>
             <p className="text-gray-600">{stream.description}</p>
             <button
-              onClick={() => navigate(`/viewLiveStream  /${stream._id}`)}
-              className="mt-2 px-4 py-2 bg-cyan-300 text-black rounded hover:bg-cyan-400 transition-colors duration-300"
+              onClick={() => navigate(`/viewLiveStream/${stream._id}`)}
+              className="mt-2 px-4 py-2 bg-green-400 text-black rounded hover:bg-green-500 transition-colors duration-300"
             >
               Go Live Now
             </button>
@@ -128,15 +128,15 @@ function Dashboard() {
   }, [navigate]);
 
   return (
-    <div className="flex-1 flex justify-center items-center p-8 md:p-12 lg:p-16">
-      <div className="w-full max-w-2xl h-full mt-24 p-6 md:p-8 bg-white rounded-lg shadow-lg text-center">
+    <div className="flex-1 flex justify-center items-center p-8 md:p-12 lg:p-16 bg-black text-white">
+      <div className="w-full max-w-2xl h-full mt-24 p-6 md:p-8 bg-[#09090b] rounded-lg shadow-lg text-center">
         <h1 className="text-4xl md:text-5xl font-bold pt-4">Dashboard</h1>
-        <hr className="border border-gray-300 w-full my-4" />
+        <hr className="border border-gray-300 w-full my-6" />
         {user ? (
           <div className="flex flex-col items-center gap-y-4">
             <UserPhoto user={user} />
             <h2 className="text-2xl font-semibold">{user.name}</h2>
-            <p className="text-gray-600">{user.email}</p>
+            <p className="text-gray-300">{user.email}</p>
             <div className="flex space-x-4 mt-4">
               <button
                 onClick={() => navigate("/scheduleLiveStream")}
@@ -146,7 +146,7 @@ function Dashboard() {
               </button>
               <button
                 onClick={() => navigate("/addCourse")}
-                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors duration-300"
+                className="px-4 py-2 bg-green-500 rounded hover:bg-green-600 text-black transition-colors duration-300"
               >
                 Create Course
               </button>

@@ -28,13 +28,13 @@ function StreamView() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="p-6 bg-white shadow-md rounded-lg">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white">
+      <div className="p-6 bg-gray-900 shadow-md rounded-lg">
         <h1 className="text-2xl font-bold mb-4 text-center">Ready to Start Your Stream?</h1>
         <button 
           onClick={startStream}
           disabled={loading}
-          className="px-6 py-3 bg-cyan-300 text-black rounded hover:bg-cyan-400 transition-colors duration-300"
+          className="px-6 py-3 bg-green-400 text-black rounded hover:bg-green-500 transition-colors duration-300"
         >
           {loading ? "Starting Stream..." : "Continue to streaming details"}
         </button>

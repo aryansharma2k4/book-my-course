@@ -37,7 +37,7 @@ function ScheduleLiveStream() {
             );
           
             console.log(response);
-            toast.success("Course created successfully");
+            toast.success("Course created successfully. Please check your dashboard and proceed");
             // navigate(`/course/edit/${response.data.message._id}`);
           } catch (error) {
             console.error("Error scheduling livestream", error);
@@ -46,15 +46,15 @@ function ScheduleLiveStream() {
 
     }
   return (
-    <div className="flex-1 flex justify-center items-center p-8 md:p-12 lg:p-16">
-      <div className="w-full max-w-8xl h-full mt-24 p-6 md:p-8 bg-white rounded-lg shadow-lg">
+    <div className="flex-1 flex justify-center items-center p-8 md:p-12 lg:p-16 bg-black">
+      <div className="w-full max-w-8xl h-full mt-24 p-6 md:p-8 text-white rounded-lg bg-[#09090b] shadow-lg">
         <h1 className="text-4xl md:text-5xl font-bold pt-4">Schedule a Livestream</h1>
         <hr className="border border-gray-300 w-full my-4" />
         <form className="mt-4 flex flex-col gap-y-4" onSubmit={handleSubmit}>
           <label className="w-full">
             Title:
             <input
-              className="border border-gray-300 rounded-lg text-gray-700 w-full mt-1 px-3 py-2"
+              className="border border-gray-300 rounded-lg text-gray-300 w-full mt-1 px-3 py-2"
               type="text"
               name="livestreamtitle"
               placeholder="Livestream title"
@@ -64,7 +64,7 @@ function ScheduleLiveStream() {
           <label className="w-full">
             Description:
             <textarea
-              className="border border-gray-300 rounded-lg text-gray-700 w-full mt-1 p-3"
+              className="border border-gray-300 rounded-lg text-gray-300 w-full mt-1 p-3"
               placeholder="Livestream Description"
               rows="5"
               name="livestreamdescription"
@@ -74,7 +74,7 @@ function ScheduleLiveStream() {
           <label className="w-full">
             Price:
             <input
-              className="border border-gray-300 rounded-lg text-gray-700 w-full mt-1 px-3 py-2"
+              className="border border-gray-300 rounded-lg text-gray-300 w-full mt-1 px-3 py-2"
               type="number"
               name="livestreamprice"
               placeholder="Price"
@@ -84,7 +84,7 @@ function ScheduleLiveStream() {
           <label className="w-full">
   Set starting date & time
   <input
-    className="border border-gray-300 rounded-lg text-gray-700 w-full mt-1 px-3 py-2"
+    className="border border-gray-300 rounded-lg text-gray-300 w-full mt-1 px-3 py-2"
     type="datetime-local"
     name="startdatetime"
     required
@@ -93,7 +93,7 @@ function ScheduleLiveStream() {
 
           <button
             type="submit"
-            className="py-2 px-4 bg-black text-white rounded-lg transition hover:scale-105 hover:bg-white hover:text-black border border-gray-300 cursor-pointer w-full md:w-1/3 mx-auto mt-4"
+            className="py-2 px-4 text-black bg-green-400  rounded-lg transition hover:scale-105 hover:bg-green-500 font-bold hover:text-black cursor-pointer w-full md:w-1/3 mx-auto mt-4"
           >
             Continue
           </button>

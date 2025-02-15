@@ -55,17 +55,18 @@ function CourseView() {
   }, [courseid, navigate]);
 
   return (
-    <div className="mt-24 flex justify-center p-6 md:p-10 min-h-screen bg-gray-100">
-      <div className="w-full max-w-3xl bg-white p-6 md:p-8 rounded-lg shadow-md">
+    <div className="mt-24 flex justify-center p-6 md:p-10 min-h-screen bg-black text-white">
+      <div className="w-full max-w-3xl bg-[#09090b] p-6 md:p-8 rounded-lg shadow-lg text-center">
         {loading ? (
-          <p className="text-center text-lg text-gray-600">Loading course...</p>
+          <p className="text-center text-lg text-gray-300">Loading course...</p>
         ) : (
           <>
-            <h1 className="text-4xl font-bold text-gray-900">{title}</h1>
-            <hr className="border border-gray-300 w-full mx-auto my-4" />
-            <p className="text-gray-700 text-xl font-semibold">{description}</p>
+            <h1 className="text-4xl font-bold text-white text-start">{title}</h1>
+            <hr className="border border-gray-500 w-full mx-auto my-4" />
+            <p className="text-gray-300 text-xl font-semibold text-start">{description}</p>
 
-            <h2 className="text-2xl font-semibold mt-6">Videos</h2>
+            <h2 className="text-xl font-semibold mt-6 text-start">Videos</h2>
+            <hr className="border border-gray-500 w-full mx-auto mb-8 mt-2" />
 
             {videos.length > 0 ? (
               <div className="mt-4">
@@ -73,7 +74,7 @@ function CourseView() {
                   <Link
                     key={video.id}
                     to={`/video/${video.id}?courseId=${courseid}`}
-                    className="block py-3 px-4 border-b font-semibold last:border-none text-lg font-medium bg-gray-200 rounded-xl text-gray-800 hover:bg-gray-300 transition duration-200"
+                    className="block py-2 px-4 mt-2 last:border-none text-lg text-start font-medium bg-gray-900 rounded-sm text-white hover:bg-gray-700 transition duration-200"
                   >
                     {index + 1}. {video.title}
                   </Link>

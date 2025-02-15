@@ -104,16 +104,17 @@ function AddToCourse() {
   };
 
   return (
-    <div className="min-h-screen pt-24 flex flex-col items-center bg-white py-36 text-black mt-24">
-      <div className="max-w-4xl w-full bg-gray-100 p-6 rounded-lg shadow">
-        <h1 className="text-3xl font-bold">{course.title}</h1>
-        <p className="mt-2 text-gray-700">{course.description}</p>
+    <div className="min-h-screen pt-24 flex flex-col items-center bg-black py-36 text-white mt-24">
+      <div className="max-w-4xl w-full bg-[#09090b] p-6 rounded-lg shadow">
+        <h1 className="text-4xl font-bold">{course.title}</h1>
+        <p className="mt-2 text-gray-300">{course.description}</p>
+        <hr className="border border-green-300 w-full my-4 mb-8" />
 
         <div className="mt-6">
           <h2 className="text-xl font-semibold">Add to the Playlist:</h2>
           <ul className="mt-2">
             {videos.map((video, index) => (
-              <li key={index} className="border p-2 rounded bg-white my-2 flex items-center">
+              <li key={index} className="border p-2 border-green-300 rounded-xl bg-[#09090b] my-2 flex items-center">
                 <span className="h-full w-10 text-center px-3 py-1 text-2xl text-white bg-black mr-3 rounded">
                   {index + 1}.
                 </span>
@@ -122,7 +123,7 @@ function AddToCourse() {
             ))}
           </ul>
 
-          <label className="block mt-4 cursor-pointer bg-white border-dashed border border-gray-400 text-black py-2 px-4 rounded-lg">
+          <label className="block mt-4 cursor-pointer bg-[#09090b] border-dashed border-2 border-green-300 text-white py-2 px-4 rounded-lg">
             {uploading ? "Uploading..." : "Add Video"}
             <input type="file" accept="video/*" className="hidden" onChange={handleFileChange} />
           </label>
@@ -136,21 +137,20 @@ function AddToCourse() {
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white">
+          <div className="bg-[#09090b] p-6 rounded-lg shadow-lg">
             <h2 className="text-xl font-bold mb-4">Enter Video Details</h2>
             <input type="text" className="border p-2 w-full mb-2" placeholder="Video Title" value={title} onChange={(e) => setTitle(e.target.value)} />
             <input type="text" className="border p-2 w-full mb-2" placeholder="Video Description" value={description} onChange={(e) => setDescription(e.target.value)} />
             <input type="file" className="border p-2 w-full mb-4" onChange={(e) => setThumbnail(e.target.files[0])} />
             <div className="flex justify-end">
-              <button className="bg-gray-400 text-white px-4 py-2 rounded mr-2" onClick={() => setShowModal(false)}>Cancel</button>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={handleUpload}>Upload</button>
+              <button className="border-gray-400 text-white px-4 py-2 rounded mr-2" onClick={() => setShowModal(false)}>Cancel</button>
+              <button className="bg-green-300 text-black px-4 py-2 rounded" onClick={handleUpload}>Upload</button>
             </div>
           </div>
         </div>
       )}
-
-      <button className="mt-6 bg-blue-600 text-white px-6 py-2 rounded" onClick={() => navigate(`/course/view/${courseid}`)}>Done</button>
+      <button className="mt-6 cursor-pointer hover:bg-green-400 transition border-green-300 border-2 font-bold text-white px-6 py-2 rounded-xl" onClick={() => navigate(`/course/view/${courseid}`)}>Done</button>
     </div>
   );
 }
