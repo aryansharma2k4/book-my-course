@@ -90,10 +90,10 @@ function Header({ isAuthenticated, setIsAuthenticated }) {
 
   return (
     <div>
-      <header className="h-24 bg-[#09090b] fixed top-0 left-0 min-w-screen text-xl text-white flex justify-between items-center px-5 mb-4 z-50">
+      <header className="h-18 bg-[#1a1a1c] fixed top-0 left-0 min-w-screen text-xl text-white flex justify-between items-center px-5 mb-4 z-50">
         <Link to="/">
-          <img className="h-10 hidden sm:block" src={companyLogo} alt="Company Logo" />
-          <img className="h-10 sm:h-12 sm:hidden scale-65" src={companyLogoSmall} alt="Company Logo Small" />
+          <img className="h-8 hidden sm:block" src={companyLogo} alt="Company Logo" />
+          <img className="h-8 sm:h-12 sm:hidden scale-65" src={companyLogoSmall} alt="Company Logo Small" />
         </Link>
         <ul className="flex gap-x-5 items-center relative">
           {isAuthenticated ? (

@@ -73,7 +73,7 @@ const registerEducator = asyncHandler( async(req, res) => {
         avatar: avatar?.url || null
     })
 
-    const { accessToken } = generateAccessAndRefreshToken(educator._id);
+    const { accessToken } = await generateAccessAndRefreshToken(educator._id);
     const createdEducator = await Educator.findById(educator._id).select(" --password -refreshToken");
     if(!createdEducator) throw new ApiError(500, "Error creating user")
 

@@ -13,7 +13,7 @@ const generateAccessAndRefreshToken = async(userId) =>{
         const refreshToken = user.generateRefreshToken()
 
         user.refreshToken = refreshToken;
-        await user.save({validationBeforeSave: false})
+        await user.save({validateBeforeSave: false})
 
         return {accessToken, refreshToken}
 
@@ -107,7 +107,9 @@ const registerUser = asyncHandler(async(req, res) => {
         password,
         course: []
     })
-    const accessToken = await generateAccessAndRefreshToken(user._id);
+    const {accessToken} = await generateAccessAndRefreshToken(user._id);
+    console.log(accessToken);
+    
     const createdUser = await User.findById(user._id).select("-password -refreshToken");
     if(!createdUser) throw new ApiError(500, "Error creating user");
 

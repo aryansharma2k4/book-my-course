@@ -1,5 +1,5 @@
 import React from "react";
-import landingImage from "../assets/landing-image.jpg"; // Replace with the correct image path
+import landingImage from "../../public/image.png"; // Replace with the correct image path
 import { useNavigate } from "react-router-dom";
 import RotatingText from "./ext/RotatingText";
 
@@ -10,7 +10,10 @@ function Landing() {
     <div className="min-h-screen p-24 flex flex-col md:flex-row items-center mt-12 bg-[#09090b] text-white px-6 md:px-12">
       {/* Left Content */}
       <div className="flex-1 flex flex-col justify-center items-start text-center md:text-left space-y-4">
-        <h1 className="text-5xl md:text-5xl font-bold leading-tight">
+        <div className="flex flex-col space-y-0 mb-4"><h1 className="text-7xl text-[#DCFF50] font-semibold leading-tight">ANYTIME</h1>
+        <h1 className="text-7xl text-[#EAFF96] font-semibold leading-tight">ANYWHERE</h1>
+        <h1 className="text-7xl text-[#F4FFCA] font-semibold leading-tight">LEARNING</h1></div>
+        <h1 className="text-5xl mt-4 md:text-5xl font-bold leading-tight">
           Cognitio is your one stop solution for{"  "}
           <RotatingText
             texts={["Courses", "Webinars", "Events", "Lectures"]}
